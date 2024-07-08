@@ -4,41 +4,41 @@
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param chillVariable - Chill variable selection by user
+#' @param etEquation - ET equation selection by user
 #' @return `figure` - png of figure
 
 
-fxnFigure <- function(inData, azmetStation, startDate, endDate, chillVariable) {
+fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
   figure <- ggplot2::ggplot(
     data = inData, 
-    mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$chillSum)
+    mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$etTotal)
   ) +
     
     geom_col( # Previous growing season
       data = dplyr::filter(inData, inData$dateYearLabel < max(inData$dateYearLabel)), 
-      mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$chillSum), 
+      mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$etTotal), 
       alpha = 1.0, fill = "#999999"
     ) +
     
     geom_col( # Current growing season
       data = dplyr::filter(inData, inData$dateYearLabel == max(inData$dateYearLabel)), 
-      mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$chillSum), 
+      mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$etTotal), 
       alpha = 1.0, fill = "#001C48"
     ) +
     
     geom_label( # Previous growing season
       data = dplyr::filter(inData, inData$dateYearLabel < max(inData$dateYearLabel)), 
-      mapping = aes(label = .data$chillSumLabel, fontface = "bold"), 
+      mapping = aes(label = .data$etTotalLabel, fontface = "bold"), 
       color = "#999999", fill = NA, label.size = NA, size = 3, vjust = 0.0
     ) +
     
     geom_label( # Current growing season
       data = dplyr::filter(inData, inData$dateYearLabel == max(inData$dateYearLabel)), 
-      mapping = aes(label = .data$chillSumLabel, fontface = "bold"), 
+      mapping = aes(label = .data$etTotalLabel, fontface = "bold"), 
       color = "#001C48", fill = NA, label.size = NA, size = 3, vjust = 0.0
     ) + 
     
-    labs(x = "\nYear", y = paste0(chillVariable,"\n")) +
+    labs(x = "\nYear", y = paste0(etEquation,"\n")) +
     
     scale_y_continuous(expand = expansion(mult = c(0.01, 0.05))) +
     
