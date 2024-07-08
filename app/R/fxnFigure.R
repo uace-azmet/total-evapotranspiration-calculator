@@ -23,7 +23,7 @@ fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
     geom_col( # Current growing season
       data = dplyr::filter(inData, inData$dateYearLabel == max(inData$dateYearLabel)), 
       mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$etTotal), 
-      alpha = 1.0, fill = "#001C48"
+      alpha = 1.0, fill = "#343a40"
     ) +
     
     geom_label( # Previous growing season
@@ -35,7 +35,7 @@ fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
     geom_label( # Current growing season
       data = dplyr::filter(inData, inData$dateYearLabel == max(inData$dateYearLabel)), 
       mapping = aes(label = .data$etTotalLabel, fontface = "bold"), 
-      color = "#001C48", fill = NA, label.size = NA, size = 3, vjust = 0.0
+      color = "#343a40", fill = NA, label.size = NA, size = 3, vjust = 0.0
     ) + 
     
     labs(x = "\nYear", y = paste0(etEquation,"\n")) +

@@ -98,23 +98,23 @@ ui <- htmltools::htmlTemplate(
       #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureTitle"))
       #), 
       
-      #fluidRow(
-      #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureSubtitle"))
-      #),
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureSubtitle"))
+      ),
       
       fluidRow(
         column(width = 11, align = "left", offset = 1, plotOutput(outputId = "figure"))
       ), 
       
-      #br(), br(),
-      #fluidRow(
-      #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooterHelpText"))
-      #),
+      br(), br(),
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooterHelpText"))
+      ),
       
-      #fluidRow(
-      #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooter"))
-      #),
-      #br()
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooter"))
+      ),
+      br()
     ) # mainPanel()
   ) # sidebarLayout()
 ) # htmltools::htmlTemplate()
@@ -164,25 +164,29 @@ server <- function(input, output, session) {
   })
   
   # Build figure footer
-  #figureFooter <- eventReactive(dataAZMetDataMerge(), {
-  #  fxnFigureFooter(
-  #    azmetStation = input$azmetStation,
-  #    startDate = input$startDate, 
-  #    endDate = input$endDate,
-  #    etEquation = input$etEquation, 
-  #    timeStep = "Daily"
-  #  )
-  #})
+  figureFooter <- eventReactive(dataAZMetDataMerge(), {
+    fxnFigureFooter(
+      azmetStation = input$azmetStation,
+      startDate = input$startDate, 
+      endDate = input$endDate,
+      etEquation = input$etEquation, 
+      timeStep = "Daily"
+    )
+  })
   
   # Build figure footer help text
-  #figureFooterHelpText <- eventReactive(dataAZMetDataMerge(), {
-  #  fxnFigureFooterHelpText()
-  #})
+  figureFooterHelpText <- eventReactive(dataAZMetDataMerge(), {
+    fxnFigureFooterHelpText()
+  })
   
   # Build figure subtitle
-  #figureSubtitle <- eventReactive(dataAZMetDataMerge(), {
-  #  fxnFigureSubtitle(azmetStation = input$azmetStation, startDate = input$startDate, endDate = input$endDate)
-  #})
+  figureSubtitle <- eventReactive(dataAZMetDataMerge(), {
+    fxnFigureSubtitle(
+      azmetStation = input$azmetStation, 
+      startDate = input$startDate, 
+      endDate = input$endDate
+    )
+  })
   
   # Build figure title
   #figureTitle <- eventReactive(input$calculateTotalET, {
@@ -193,7 +197,7 @@ server <- function(input, output, session) {
   #    ),
   #    errorClass = "datepicker"
   #  )
-    
+  
   #  fxnFigureTitle(
   #    inData = dataAZMetDataMerge(), 
   #    endDate = input$endDate,
@@ -206,17 +210,17 @@ server <- function(input, output, session) {
     figure()
   }, res = 96)
   
-  #output$figureFooter <- renderUI({
-  #  figureFooter()
-  #})
+  output$figureFooter <- renderUI({
+    figureFooter()
+  })
   
-  #output$figureFooterHelpText <- renderUI({
-  #  figureFooterHelpText()
-  #})
+  output$figureFooterHelpText <- renderUI({
+    figureFooterHelpText()
+  })
   
-  #output$figureSubtitle <- renderUI({
-  #  figureSubtitle()
-  #})
+  output$figureSubtitle <- renderUI({
+    figureSubtitle()
+  })
   
   #output$figureTitle <- renderUI({
   #  figureTitle()
