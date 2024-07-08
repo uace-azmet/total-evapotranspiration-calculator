@@ -3,11 +3,11 @@
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param chillVariable - Chill variable selection by user
-#' @return `dataAZMetDataMerge` - merged data tables from individual years
+#' @param etEquation - Evapotranspiration equation selection by user
+#' @return `dataAZMetDataMerge` - Merged data tables from individual years
 
 
-fxnAZMetDataMerge <- function(azmetStation, startDate, endDate, chillVariable) {
+fxnAZMetDataMerge <- function(azmetStation, startDate, endDate, etEquation) {
   azmetStationStartDate <- lubridate::as_date("2021-01-01") # Placeholder for station start date
   
   while (startDate >= azmetStationStartDate) {
@@ -21,19 +21,19 @@ fxnAZMetDataMerge <- function(azmetStation, startDate, endDate, chillVariable) {
       startDate <- min(seq(startDate, length = 2, by = "-1 year"))
       endDate <- min(seq(endDate, length = 2, by = "-1 year"))
     } else {
-      # Chill accumulation calculation
-      dataAZMetDataSumChill <- fxnAZMetDataSumChill(
+      # Total evapotranspiration calculation
+      dataAZMetDataTotalET <- fxnAZMetDataTotalET(
         inData = dataAZMetDataELT,
         azmetStation = azmetStation, 
         startDate = startDate, 
         endDate = endDate,
-        chillVariable = chillVariable
+        etEquation = etEquation
       )
       
       if (exists("dataAZMetDataMerge") == FALSE) {
-        dataAZMetDataMerge <- dataAZMetDataSumChill
+        dataAZMetDataMerge <- dataAZMetDataTotalET
       } else {
-        dataAZMetDataMerge <- rbind(dataAZMetDataMerge, dataAZMetDataSumChill)
+        dataAZMetDataMerge <- rbind(dataAZMetDataMerge, dataAZMetDataTotalET)
       }
       
       startDate <- min(seq(startDate, length = 2, by = "-1 year"))
