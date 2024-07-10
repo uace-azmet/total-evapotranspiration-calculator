@@ -12,24 +12,24 @@ fxnFigureSubtitle <- function(azmetStation, startDate, endDate, inData) {
   previousYear <- currentYear - 1
   
   currentYearTotalIn <- dplyr::filter(inData, endDateYear == currentYear)$etTotal
-  currentYearTotalMm <- format(round(currentYearTotalIn * 25.4, digits = 1), nsmall = 1)
+  currentYearTotalMm <- currentYearTotalIn * 25.4
   previousYearTotalIn <- dplyr::filter(inData, endDateYear == previousYear)$etTotal
-  previousYearTotalMm <- format(round(previousYearTotalIn * 25.4, digits = 1), nsmall = 1)
+  previousYearTotalMm <- previousYearTotalIn * 25.4
   
   totalComparePreviousIn <- currentYearTotalIn - previousYearTotalIn
-  totalComparePreviousMm <- 123 #currentYearTotalMm - previousYearTotalMm
+  totalComparePreviousMm <- currentYearTotalMm - previousYearTotalMm
   
   if (totalComparePreviousIn == 0) {
     compareTextPrevious <- "the same as"
   } else if (totalComparePreviousIn > 0) {
     compareTextPrevious <- 
       paste0(
-        totalComparePreviousIn, " inches (", totalComparePreviousMm, " millimeters) greater than"
+        format(round(totalComparePreviousIn, digits = 2), nsmall = 2), " inches (", format(round(totalComparePreviousMm, digits = 1), nsmall = 1), " millimeters) greater than"
       )
   } else { # if (totalComparePreviousIn < 0)
     compareTextPrevious <- 
       paste0(
-        totalComparePreviousIn, " inches (", totalComparePreviousMm, " millimeters) less than"
+        format(round(totalComparePreviousIn, digits = 2), nsmall = 2), " inches (", format(round(totalComparePreviousMm, digits = 1), nsmall = 1), " millimeters) less than"
       )
   }
   
@@ -38,7 +38,7 @@ fxnFigureSubtitle <- function(azmetStation, startDate, endDate, inData) {
     htmltools::p(
       htmltools::HTML(
         paste0(
-          "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", currentYearTotalIn, " inches", "</b>", " (", currentYearTotalMm, " millimeters). This is ", compareTextPrevious, " the total during this same period in ", "YEAR TEXT", "."
+          "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotalIn, digits = 2), nsmall = 2), " inches", "</b>", " (", format(round(currentYearTotalMm, digits = 1), nsmall = 1), " millimeters). This is ", compareTextPrevious, " the total during this same period in ", "YEAR TEXT", "."
         ),
       ),
       
