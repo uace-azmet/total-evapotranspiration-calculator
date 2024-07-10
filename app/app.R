@@ -94,14 +94,15 @@ ui <- htmltools::htmlTemplate(
       id = "mainPanel",
       width = 8,
       
-      #fluidRow(
-      #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureTitle"))
-      #), 
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureTitle"))
+      ), 
       
       fluidRow(
         column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureSubtitle"))
       ),
       
+      br(),
       fluidRow(
         column(width = 11, align = "left", offset = 1, plotOutput(outputId = "figure"))
       ), 
@@ -184,25 +185,26 @@ server <- function(input, output, session) {
     fxnFigureSubtitle(
       azmetStation = input$azmetStation, 
       startDate = input$startDate, 
-      endDate = input$endDate
+      endDate = input$endDate,
+      inData = dataAZMetDataMerge()
     )
   })
   
   # Build figure title
-  #figureTitle <- eventReactive(input$calculateTotalET, {
-  #  validate(
-  #    need(
-  #      expr = input$startDate <= input$endDate, 
-  #      message = "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
-  #    ),
-  #    errorClass = "datepicker"
-  #  )
+  figureTitle <- eventReactive(input$calculateTotalET, {
+    validate(
+      need(
+        expr = input$startDate <= input$endDate, 
+        message = "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+      ),
+      errorClass = "datepicker"
+    )
   
-  #  fxnFigureTitle(
-  #    inData = dataAZMetDataMerge(), 
-  #    endDate = input$endDate,
-  #    etEquation = input$etEquation)
-  #})
+    fxnFigureTitle(
+      endDate = input$endDate, 
+      inData = dataAZMetDataMerge()
+    )
+  })
   
   # Outputs -----
   
@@ -222,9 +224,9 @@ server <- function(input, output, session) {
     figureSubtitle()
   })
   
-  #output$figureTitle <- renderUI({
-  #  figureTitle()
-  #})
+  output$figureTitle <- renderUI({
+    figureTitle()
+  })
 }
 
 # Run --------------------

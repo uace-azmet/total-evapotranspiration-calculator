@@ -3,21 +3,42 @@
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
+#' @param inData - data table of seasonal total ET values by year
 #' @return `figureSubtitle` - Subtitle for figure based on selected AZMet station
 
 
-fxnFigureSubtitle <- function(azmetStation, startDate, endDate) {
-  startMonth <- lubridate::month(startDate, label = TRUE, abbr = FALSE)
-  startDay <- lubridate::mday(startDate)
-  endMonth <- lubridate::month(endDate, label = TRUE, abbr = FALSE)
-  endDay <- lubridate::mday(endDate)
+fxnFigureSubtitle <- function(azmetStation, startDate, endDate, inData) {
+  currentYear <- lubridate::year(endDate)
+  previousYear <- currentYear - 1
   
+  currentYearTotalIn <- dplyr::filter(inData, endDateYear == currentYear)$etTotal
+  currentYearTotalMm <- format(round(currentYearTotalIn * 25.4, digits = 1), nsmall = 1)
+  previousYearTotalIn <- dplyr::filter(inData, endDateYear == previousYear)$etTotal
+  previousYearTotalMm <- format(round(previousYearTotalIn * 25.4, digits = 1), nsmall = 1)
+  
+  totalComparePreviousIn <- currentYearTotalIn - previousYearTotalIn
+  totalComparePreviousMm <- 123 #currentYearTotalMm - previousYearTotalMm
+  
+  if (totalComparePreviousIn == 0) {
+    compareTextPrevious <- "the same as"
+  } else if (totalComparePreviousIn > 0) {
+    compareTextPrevious <- 
+      paste0(
+        totalComparePreviousIn, " inches (", totalComparePreviousMm, " millimeters) greater than"
+      )
+  } else { # if (totalComparePreviousIn < 0)
+    compareTextPrevious <- 
+      paste0(
+        totalComparePreviousIn, " inches (", totalComparePreviousMm, " millimeters) less than"
+      )
+  }
+  
+  # if() for != MOH, WEL, YUE
   figureSubtitle <- 
     htmltools::p(
       htmltools::HTML(
-        paste(
-          "at the AZMet", azmetStation, "station from", startMonth, startDay, "through", endMonth, endDay,
-          sep = " "
+        paste0(
+          "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", currentYearTotalIn, " inches", "</b>", " (", currentYearTotalMm, " millimeters). This is ", compareTextPrevious, " the total during this same period in ", "YEAR TEXT", "."
         ),
       ),
       
