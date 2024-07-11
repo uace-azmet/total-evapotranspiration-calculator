@@ -7,14 +7,13 @@
 
 fxnFigureTitle <- function(endDate, inData) {
   totalInches <- dplyr::filter(inData, endDateYear == lubridate::year(endDate))$etTotal
-  totalMillimeters <- format(round(totalInches * 25.4, digits = 1), nsmall = 1) 
   totalInches <- format(round(totalInches, digits = 2), nsmall = 2)
   
   figureTitle <- 
       htmltools::h4(
         htmltools::HTML(
           paste0(
-            "<b>", totalInches, " inches", "</b>", " (", totalMillimeters, " millimeters)"
+            "<b>", totalInches, " inches", "</b>"
           ),
         ),
         
