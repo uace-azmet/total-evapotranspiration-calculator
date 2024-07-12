@@ -30,13 +30,13 @@ fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
     geom_label( # Previous growing season
       data = dplyr::filter(inData, inData$dateYearLabel < max(inData$dateYearLabel)), 
       mapping = aes(label = .data$etTotalLabel, fontface = "bold"), 
-      color = "#a2a2a2", fill = "#FFFFFF", label.size = NA, size = 3.5, vjust = 0.0
+      color = "#a2a2a2", fill = "#FFFFFF", label.size = NA, size = 3.5, vjust = -0.1
     ) +
     
     geom_label( # Current growing season
       data = dplyr::filter(inData, inData$dateYearLabel == max(inData$dateYearLabel)), 
       mapping = aes(label = .data$etTotalLabel, fontface = "bold"), 
-      color = "#3b3b3b", fill = "#FFFFFF", label.size = NA, size = 3.5, vjust = 0.0
+      color = "#3b3b3b", fill = "#FFFFFF", label.size = NA, size = 3.5, vjust = -0.1
     ) + 
     
     labs(x = "\nYear", y = paste0("Total Evapotranspiration (inches)","\n")) +

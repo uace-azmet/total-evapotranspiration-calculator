@@ -12,7 +12,12 @@ fxnAZMetDataTotalET <- function(inData, azmetStation, startDate, endDate, etEqua
   if (length(unique(inData$date_year)) == 1) { # For single calendar year in data
     dateYear <- as.character(unique(inData$date_year))
   } else { # For two calendar years in data
-    dateYear <- paste(min(unique(inData$date_year)), max(unique(inData$date_year)), sep = "-")
+    dateYear <- 
+      paste(
+        min(unique(inData$date_year), na.rm = TRUE),
+        max(unique(inData$date_year), na.rm = TRUE), 
+        sep = "-"
+      )
   }
   
   if (etEquation == "Original AZMet") {
@@ -32,9 +37,6 @@ fxnAZMetDataTotalET <- function(inData, azmetStation, startDate, endDate, etEqua
       dplyr::mutate(endDateYear = lubridate::year(endDate)) %>%
       dplyr::mutate(dateYearLabel = dateYear)
   }
-  
-  # TODO: YUG, WEL, YUE, MOE missing data
-  # If requested date range (sequence?) in missing data range, then NA for annual total
   
   return(dataAZMetDataTotalET)
 }

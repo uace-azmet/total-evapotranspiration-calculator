@@ -7,6 +7,8 @@ azmetStations <- vroom::vroom(
 )
 
 # Set auxiliary variables
+apiStartDate <- as.Date("2021-01-01")
+
 etEquations <- c("Original AZMet", "Penman-Monteith")
 
 initialStartDate <- Sys.Date() - lubridate::dmonths(x = 1)

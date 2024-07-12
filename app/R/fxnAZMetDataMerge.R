@@ -15,47 +15,61 @@ fxnAZMetDataMerge <- function(azmetStation, startDate, endDate, etEquation) {
     dataAZMetDataELT <- fxnAZMetDataELT(
       azmetStation = azmetStation, timeStep = "Daily", startDate = startDate, endDate = endDate
     )
+  
+    # Total evapotranspiration calculation for period of interest
+    dataAZMetDataTotalET <- fxnAZMetDataTotalET(
+      inData = dataAZMetDataELT,
+      azmetStation = azmetStation, 
+      startDate = startDate, 
+      endDate = endDate,
+      etEquation = etEquation
+    )
     
-    # For case of empty data return
-    if (nrow(dataAZMetDataELT) == 0) {
-      startDate <- min(seq(startDate, length = 2, by = "-1 year"))
-      endDate <- min(seq(endDate, length = 2, by = "-1 year"))
-    } else {
-      # Total evapotranspiration calculation
-      dataAZMetDataTotalET <- fxnAZMetDataTotalET(
-        inData = dataAZMetDataELT,
-        azmetStation = azmetStation, 
-        startDate = startDate, 
-        endDate = endDate,
-        etEquation = etEquation
-      )
-      
-      if (exists("dataAZMetDataMerge") == FALSE) {
-        dataAZMetDataMerge <- dataAZMetDataTotalET
-      } else {
-        dataAZMetDataMerge <- rbind(dataAZMetDataMerge, dataAZMetDataTotalET)
+    # Address stations with `nodata` blocks or start dates later than API start date
+    if (azmetStation %in% c("Mohave ETo", "Wellton ETo", "Yuma North Gila", "Yuma Valley ETo")) {
+      if (azmetStation == "Mohave ETo") {
+        nodataDateRange <- 
+          lubridate::interval(
+            start = apiStartDate, 
+            end = lubridate::date("2024-06-19")
+          )
+      } else if (azmetStation == "Wellton ETo") {
+        nodataDateRange <- 
+          lubridate::interval(
+            start = apiStartDate, 
+            end = lubridate::date("2023-05-01")
+          )
+      } else if (azmetStation == "Yuma North Gila") {
+        nodataDateRange <- 
+          lubridate::interval(
+            start = lubridate::date("2021-06-16"), 
+            end = lubridate::date("2021-10-21")
+          )
+      } else if (azmetStation == "Yuma Valley ETo") {
+        nodataDateRange <- 
+          lubridate::interval(
+            start = apiStartDate, 
+            end = lubridate::date("2023-05-01")
+          )
       }
       
-      startDate <- min(seq(startDate, length = 2, by = "-1 year"))
-      endDate <- min(seq(endDate, length = 2, by = "-1 year"))
+      downloadDateRange <- lubridate::interval(start = startDate, end = endDate)
+      
+      if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = downloadDateRange) == TRUE) {
+        dataAZMetDataTotalET$etTotal <- 0.00
+        dataAZMetDataTotalET$etTotalLabel <- "NA" 
+      }
     }
+    
+    if (exists("dataAZMetDataMerge") == FALSE) {
+      dataAZMetDataMerge <- dataAZMetDataTotalET
+    } else {
+      dataAZMetDataMerge <- rbind(dataAZMetDataMerge, dataAZMetDataTotalET)
+    }
+    
+    startDate <- min(seq(startDate, length = 2, by = "-1 year"))
+    endDate <- min(seq(endDate, length = 2, by = "-1 year"))
   }
-  
-  # For case of missing data from Yuma North Gila
-  #if (azmetStation == "Yuma North Gila" && endDate >= lubridate::as_date(paste0(lubridate::year(endDate), "-06-16"))) {
-  #  dataAZMetDataMerge <- dataAZMetDataMerge %>%
-  #    dplyr::filter(endDateYear != 2021)
-  #}
-  
-  # For case of data record length from Wellton ETo and Yuma Valley ETo
-  #if (azmetStation == "Wellton ETo" && endDate > lubridate::as_date(paste0(lubridate::year(endDate), "-05-02"))) {
-  #  dataAZMetDataMerge <- dataAZMetDataMerge %>%
-  #    dplyr::filter(endDateYear >= 2024)
-  #}
-  #if (azmetStation == "Yuma Valley ETo" && endDate > lubridate::as_date(paste0(lubridate::year(endDate), "-05-02"))) {
-  #  dataAZMetDataMerge <- dataAZMetDataMerge %>%
-  #    dplyr::filter(endDateYear >= 2024)
-  #}
-  
+
   return(dataAZMetDataMerge)
 }
