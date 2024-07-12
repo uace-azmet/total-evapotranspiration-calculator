@@ -22,27 +22,40 @@ fxnFigureSubtitle <- function(azmetStation, startDate, endDate, inData) {
   } else if (totalComparePreviousIn > 0) {
     compareTextPrevious <- 
       paste0(
-        format(round(totalComparePreviousIn, digits = 2), nsmall = 2), " inches greater than"
+        format(abs(round(totalComparePreviousIn, digits = 2)), nsmall = 2), " inches greater than"
       )
   } else { # if (totalComparePreviousIn < 0)
     compareTextPrevious <- 
       paste0(
-        format(round(totalComparePreviousIn, digits = 2), nsmall = 2), " inches less than"
+        format(abs(round(totalComparePreviousIn, digits = 2)), nsmall = 2), " inches less than"
       )
   }
   
   # TODO: Add average information
   # TODO: if() for != MOH, WEL, YUE
-  figureSubtitle <- 
-    htmltools::p(
-      htmltools::HTML(
-        paste0(
-          "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotalIn, digits = 2), nsmall = 2), " inches", "</b>", ". This is ", compareTextPrevious, " the total during this same period in ", previousYearText, "."
+  if (nrow(inData) == 1) {
+    figureSubtitle <- 
+      htmltools::p(
+        htmltools::HTML(
+          paste0(
+            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotalIn, digits = 2), nsmall = 2), " inches</b>."
+          ),
         ),
-      ),
-      
-      class = "figure-subtitle"
-    )
+        
+        class = "figure-subtitle"
+      )
+  } else {
+    figureSubtitle <- 
+      htmltools::p(
+        htmltools::HTML(
+          paste0(
+            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotalIn, digits = 2), nsmall = 2), " inches</b>. This is ", compareTextPrevious, " the total during this same period in ", previousYearText, "."
+          ),
+        ),
+        
+        class = "figure-subtitle"
+      )
+  }
   
   return(figureSubtitle)
 }

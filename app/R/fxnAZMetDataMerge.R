@@ -42,20 +42,20 @@ fxnAZMetDataMerge <- function(azmetStation, startDate, endDate, etEquation) {
   }
   
   # For case of missing data from Yuma North Gila
-  if (azmetStation == "Yuma North Gila" && endDate >= lubridate::as_date(paste0(lubridate::year(endDate), "-06-16"))) {
-    dataAZMetDataMerge <- dataAZMetDataMerge %>%
-      dplyr::filter(endDateYear != 2021)
-  }
+  #if (azmetStation == "Yuma North Gila" && endDate >= lubridate::as_date(paste0(lubridate::year(endDate), "-06-16"))) {
+  #  dataAZMetDataMerge <- dataAZMetDataMerge %>%
+  #    dplyr::filter(endDateYear != 2021)
+  #}
   
   # For case of data record length from Wellton ETo and Yuma Valley ETo
-  if (azmetStation == "Wellton ETo" && endDate > lubridate::as_date(paste0(lubridate::year(endDate), "-05-02"))) {
-    dataAZMetDataMerge <- dataAZMetDataMerge %>%
-      dplyr::filter(endDateYear >= 2024)
-  }
-  if (azmetStation == "Yuma Valley ETo" && endDate > lubridate::as_date(paste0(lubridate::year(endDate), "-05-02"))) {
-    dataAZMetDataMerge <- dataAZMetDataMerge %>%
-      dplyr::filter(endDateYear >= 2024)
-  }
+  #if (azmetStation == "Wellton ETo" && endDate > lubridate::as_date(paste0(lubridate::year(endDate), "-05-02"))) {
+  #  dataAZMetDataMerge <- dataAZMetDataMerge %>%
+  #    dplyr::filter(endDateYear >= 2024)
+  #}
+  #if (azmetStation == "Yuma Valley ETo" && endDate > lubridate::as_date(paste0(lubridate::year(endDate), "-05-02"))) {
+  #  dataAZMetDataMerge <- dataAZMetDataMerge %>%
+  #    dplyr::filter(endDateYear >= 2024)
+  #}
   
   return(dataAZMetDataMerge)
 }

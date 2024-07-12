@@ -12,12 +12,12 @@
   color: #828282; font-style: italic;
 }
 
-.figure-subtitle {
-  color: #343a40; font-weight: normal; margin-top: 0;
-}
+/*.figure-subtitle {
+  color: #3b3b3b; font-weight: normal; margin-top: 0;
+}*/
 
 .figure-title {
-  color: #343a40 !important; font-weight: normal !important; margin-bottom: 0.3em !important; margin-top: 0;
+  color: #3b3b3b !important; font-weight: normal !important; margin-bottom: 0.3em !important; margin-top: 0;
 }
 
 .help-block {

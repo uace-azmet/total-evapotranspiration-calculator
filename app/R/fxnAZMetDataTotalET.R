@@ -33,5 +33,8 @@ fxnAZMetDataTotalET <- function(inData, azmetStation, startDate, endDate, etEqua
       dplyr::mutate(dateYearLabel = dateYear)
   }
   
+  # TODO: YUG, WEL, YUE, MOE missing data
+  # If requested date range (sequence?) in missing data range, then NA for annual total
+  
   return(dataAZMetDataTotalET)
 }
