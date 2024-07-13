@@ -107,6 +107,11 @@ ui <- htmltools::htmlTemplate(
         column(width = 11, align = "left", offset = 1, plotOutput(outputId = "figure"))
       ), 
       
+      br(),
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureSubtext"))
+      ),
+      
       br(), br(),
       fluidRow(
         column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooterHelpText"))
@@ -180,6 +185,11 @@ server <- function(input, output, session) {
     fxnFigureFooterHelpText()
   })
   
+  # Build figure subtext
+  figureSubtext <- eventReactive(dataAZMetDataMerge(), {
+    fxnFigureSubtext(azmetStation = input$azmetStation)
+  })
+  
   # Build figure subtitle
   figureSubtitle <- eventReactive(dataAZMetDataMerge(), {
     fxnFigureSubtitle(
@@ -218,6 +228,10 @@ server <- function(input, output, session) {
   
   output$figureFooterHelpText <- renderUI({
     figureFooterHelpText()
+  })
+  
+  output$figureSubtext <- renderUI({
+    figureSubtext()
   })
   
   output$figureSubtitle <- renderUI({

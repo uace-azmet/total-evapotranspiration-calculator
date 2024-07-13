@@ -12,6 +12,10 @@
   color: #828282; font-style: italic;
 }
 
+.figure-subtext {
+  color: #a2a2a2;
+}
+
 /*.figure-subtitle {
   color: #3b3b3b; font-weight: normal; margin-top: 0;
 }*/
