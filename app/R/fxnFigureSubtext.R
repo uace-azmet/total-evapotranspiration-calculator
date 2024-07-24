@@ -38,7 +38,7 @@ fxnFigureSubtext <- function(azmetStation, startDate, endDate) {
         htmltools::HTML(
           paste(
             standardText,
-            "Values of 'NA' indicate an overlap with the period from June 16, 2021 through October 10, 2021, when the ", azmetStation, " station was not in operation.",
+            "'NA' indicates an overlap with the period from June 16, 2021 through October 10, 2021, when the ", azmetStation, " station was not in operation.",
             sep = " "
           )
         ),
