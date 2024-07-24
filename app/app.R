@@ -94,27 +94,33 @@ ui <- htmltools::htmlTemplate(
       id = "mainPanel",
       width = 8,
       
-      #fluidRow(
-      #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureTitle"))
-      #), 
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureTitle"))
+      ), 
       
-      #fluidRow(
-      #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureSubtitle"))
-      #),
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureSubtitle"))
+      ),
       
+      br(),
       fluidRow(
         column(width = 11, align = "left", offset = 1, plotOutput(outputId = "figure"))
       ), 
       
-      #br(), br(),
-      #fluidRow(
-      #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooterHelpText"))
-      #),
+      br(),
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureSubtext"))
+      ),
       
-      #fluidRow(
-      #  column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooter"))
-      #),
-      #br()
+      br(), br(),
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooterHelpText"))
+      ),
+      
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "figureFooter"))
+      ),
+      br()
     ) # mainPanel()
   ) # sidebarLayout()
 ) # htmltools::htmlTemplate()
@@ -164,41 +170,55 @@ server <- function(input, output, session) {
   })
   
   # Build figure footer
-  #figureFooter <- eventReactive(dataAZMetDataMerge(), {
-  #  fxnFigureFooter(
-  #    azmetStation = input$azmetStation,
-  #    startDate = input$startDate, 
-  #    endDate = input$endDate,
-  #    etEquation = input$etEquation, 
-  #    timeStep = "Daily"
-  #  )
-  #})
+  figureFooter <- eventReactive(dataAZMetDataMerge(), {
+    fxnFigureFooter(
+      azmetStation = input$azmetStation,
+      startDate = input$startDate, 
+      endDate = input$endDate,
+      etEquation = input$etEquation, 
+      timeStep = "Daily"
+    )
+  })
   
   # Build figure footer help text
-  #figureFooterHelpText <- eventReactive(dataAZMetDataMerge(), {
-  #  fxnFigureFooterHelpText()
-  #})
+  figureFooterHelpText <- eventReactive(dataAZMetDataMerge(), {
+    fxnFigureFooterHelpText()
+  })
+  
+  # Build figure subtext
+  figureSubtext <- eventReactive(dataAZMetDataMerge(), {
+    fxnFigureSubtext(
+      azmetStation = input$azmetStation,
+      startDate = input$startDate, 
+      endDate = input$endDate
+    )
+  })
   
   # Build figure subtitle
-  #figureSubtitle <- eventReactive(dataAZMetDataMerge(), {
-  #  fxnFigureSubtitle(azmetStation = input$azmetStation, startDate = input$startDate, endDate = input$endDate)
-  #})
+  figureSubtitle <- eventReactive(dataAZMetDataMerge(), {
+    fxnFigureSubtitle(
+      azmetStation = input$azmetStation, 
+      startDate = input$startDate, 
+      endDate = input$endDate,
+      inData = dataAZMetDataMerge()
+    )
+  })
   
   # Build figure title
-  #figureTitle <- eventReactive(input$calculateTotalET, {
-  #  validate(
-  #    need(
-  #      expr = input$startDate <= input$endDate, 
-  #      message = "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
-  #    ),
-  #    errorClass = "datepicker"
-  #  )
-    
-  #  fxnFigureTitle(
-  #    inData = dataAZMetDataMerge(), 
-  #    endDate = input$endDate,
-  #    etEquation = input$etEquation)
-  #})
+  figureTitle <- eventReactive(input$calculateTotalET, {
+    validate(
+      need(
+        expr = input$startDate <= input$endDate, 
+        message = "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+      ),
+      errorClass = "datepicker"
+    )
+  
+    fxnFigureTitle(
+      endDate = input$endDate, 
+      inData = dataAZMetDataMerge()
+    )
+  })
   
   # Outputs -----
   
@@ -206,21 +226,25 @@ server <- function(input, output, session) {
     figure()
   }, res = 96)
   
-  #output$figureFooter <- renderUI({
-  #  figureFooter()
-  #})
+  output$figureFooter <- renderUI({
+    figureFooter()
+  })
   
-  #output$figureFooterHelpText <- renderUI({
-  #  figureFooterHelpText()
-  #})
+  output$figureFooterHelpText <- renderUI({
+    figureFooterHelpText()
+  })
   
-  #output$figureSubtitle <- renderUI({
-  #  figureSubtitle()
-  #})
+  output$figureSubtext <- renderUI({
+    figureSubtext()
+  })
   
-  #output$figureTitle <- renderUI({
-  #  figureTitle()
-  #})
+  output$figureSubtitle <- renderUI({
+    figureSubtitle()
+  })
+  
+  output$figureTitle <- renderUI({
+    figureTitle()
+  })
 }
 
 # Run --------------------

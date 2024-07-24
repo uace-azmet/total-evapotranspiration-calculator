@@ -1,2 +1,2 @@
 # total-evapotranspiration-calculator
-Shiny app to calculate total evapotranspiration at AZMet stations over a user-specified time period
+Shiny app to calculate total evapotranspiration by user-specified AZMet station, evapotranspiration equation, and date range
