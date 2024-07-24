@@ -187,7 +187,11 @@ server <- function(input, output, session) {
   
   # Build figure subtext
   figureSubtext <- eventReactive(dataAZMetDataMerge(), {
-    fxnFigureSubtext(azmetStation = input$azmetStation)
+    fxnFigureSubtext(
+      azmetStation = input$azmetStation,
+      startDate = input$startDate, 
+      endDate = input$endDate
+    )
   })
   
   # Build figure subtitle
