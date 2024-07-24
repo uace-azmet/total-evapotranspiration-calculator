@@ -5,7 +5,7 @@
 
 
 fxnFigureSubtext <- function(azmetStation) {
-  standardText <- paste0("Data in the new AZMet database currently go back to ", format(apiStartDate, "%B %d, %Y"), ".")
+  standardText <- paste0("Data in the new AZMet database currently go back to ", gsub(" 0", " ", format(apiStartDate, "%B %d, %Y")), ".")
   
   # TODO: Need to tighten conditional to reflect missing data dates
   if (azmetStation == "Yuma North Gila") {

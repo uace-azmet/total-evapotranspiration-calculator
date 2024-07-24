@@ -20,6 +20,8 @@ fxnAZMetDataMerge <- function(azmetStation, startDate, endDate, etEquation) {
     
     # For case of empty data return
     if (nrow(dataAZMetDataELT) == 0) {
+      dataAZMetDataTotalET$dateYear <- X
+      dataAZMetDataTotalET$endDate <- Y
       dataAZMetDataTotalET$etTotal <- 0.00
       dataAZMetDataTotalET$etTotalLabel <- "NA" 
       
