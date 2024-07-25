@@ -164,8 +164,7 @@ server <- function(input, output, session) {
       inData = dataAZMetDataMerge(), 
       azmetStation = input$azmetStation,
       startDate = input$startDate, 
-      endDate = input$endDate,
-      etEquation = input$etEquation
+      endDate = input$endDate
     )
   })
   

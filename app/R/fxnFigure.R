@@ -4,11 +4,10 @@
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param etEquation - ET equation selection by user
 #' @return `figure` - png of figure
 
 
-fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
+fxnFigure <- function(inData, azmetStation, startDate, endDate) {
   figure <- ggplot2::ggplot(
     data = inData, 
     mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$etTotal)
@@ -18,7 +17,7 @@ fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
     geom_col( # Previous growing season
       data = dplyr::filter(inData, inData$dateYearLabel < max(inData$dateYearLabel)), 
       mapping = aes(x = as.factor(.data$dateYearLabel), y = .data$etTotal), 
-      alpha = 1.0, fill = "#a2a2a2"
+      alpha = 1.0, fill = "#989898"
     ) +
     
     geom_col( # Current growing season
@@ -30,7 +29,7 @@ fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
     geom_label( # Previous growing season
       data = dplyr::filter(inData, inData$dateYearLabel < max(inData$dateYearLabel)), 
       mapping = aes(label = .data$etTotalLabel, fontface = "bold"), 
-      color = "#a2a2a2", fill = "#FFFFFF", label.size = NA, size = 3.5, vjust = -0.1
+      color = "#989898", fill = "#FFFFFF", label.size = NA, size = 3.5, vjust = -0.1
     ) +
     
     geom_label( # Current growing season
@@ -52,7 +51,7 @@ fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
       #title,
       #aspect.ratio,
       axis.title = element_text(
-        color = "#a2a2a2", face = "plain", size = 10, hjust = 0.0, 
+        color = "#989898", face = "plain", size = 10, hjust = 0.0, 
         margin = margin(t = 0.2, r = 0, b = 0, l = 0, unit = "cm")
       ),
       #axis.title.x,
@@ -61,7 +60,7 @@ fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
       #axis.title.y,
       #axis.title.y.left,
       #axis.title.y.right,
-      axis.text = element_text(color = "#a2a2a2", face = "plain", size = 10),
+      axis.text = element_text(color = "#989898", face = "plain", size = 10),
       #axis.text.x,
       #axis.text.x.top,
       #axis.text.x.bottom,
@@ -119,7 +118,7 @@ fxnFigure <- function(inData, azmetStation, startDate, endDate, etEquation) {
       #panel.grid.major,
       panel.grid.minor = element_blank(),
       panel.grid.major.x = element_blank(),
-      panel.grid.major.y = element_line(color = "#a2a2a2", linetype = "solid", linewidth = 0.3),
+      panel.grid.major.y = element_line(color = "#989898", linetype = "solid", linewidth = 0.3),
       #panel.grid.minor.x,
       #panel.grid.minor.y,
       #panel.ontop,
