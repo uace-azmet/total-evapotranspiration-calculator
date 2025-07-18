@@ -1,4 +1,4 @@
-# Calculate total evapotranspiration by station and date range
+# Calculate evapotranspiration totals by station, equation, and date range
 
 
 # UI --------------------
