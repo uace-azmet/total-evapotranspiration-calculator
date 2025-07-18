@@ -68,6 +68,9 @@ ui <- htmltools::htmlTemplate(
 # Server --------------------
 
 server <- function(input, output, session) {
+  shinyjs::useShinyjs(html = TRUE)
+  shinyjs::hideElement("pageBottomText")
+  
   
   # Observables -----
   
@@ -77,7 +80,41 @@ server <- function(input, output, session) {
     }
   })
   
-  # Reactive events -----
+  shiny::observeEvent(dailyData(), {
+    shinyjs::showElement("pageBottomText")
+  })
+  
+  
+  # Reactives -----
+  
+  dailyData <- shiny::eventReactive(input$calculateTotal, {
+    shiny::validate(
+      shiny::need(
+        expr = input$startDate <= input$endDate,
+        message = FALSE
+      )
+    )
+
+    idCalculateTotal <- shiny::showNotification(
+      ui = "Calculating total evapotranspiration . . .",
+      action = NULL,
+      duration = NULL,
+      closeButton = FALSE,
+      id = "idCalculateTotal",
+      type = "message"
+    )
+
+    on.exit(
+      shiny::removeNotification(id = idCalculateTotal),
+      add = TRUE
+    )
+
+    fxn_dailyData(
+      azmetStation = input$azmetStation,
+      startDate = input$startDate,
+      endDate = input$endDate
+    )
+  })
   
   # AZMet evapotranspiration data
   # dataAZMetDataMerge <- eventReactive(input$calculateTotalET, {

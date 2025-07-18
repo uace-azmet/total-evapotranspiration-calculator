@@ -165,6 +165,7 @@
 }
 
 .modal-title {
+  font-weight: normal !important; 
   margin-top: 0px !important;
 }
 
