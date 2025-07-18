@@ -41,6 +41,17 @@
       ],
       "Hash": "f6a81550f166acbe2cd5229e9ca079b9"
     },
+    "PKI": {
+      "Package": "PKI",
+      "Version": "0.1-14",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "base64enc"
+      ],
+      "Hash": "f5b9c6b2f62f1fa3dd53fd1ddccbb241"
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.6.1",
@@ -63,14 +74,25 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.14",
+      "Version": "1.1.0",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Requirements": [
         "methods",
         "utils"
       ],
-      "Hash": "e7bdd9ee90e96921ca8a0f1972d66682"
+      "Hash": "0d3d8867aa41b0d9ad113b50c169ecb2"
+    },
+    "RcppTOML": {
+      "Package": "RcppTOML",
+      "Version": "0.2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "23eeca7d3c7d63fc7449108c0a66178c"
     },
     "askpass": {
       "Package": "askpass",
@@ -198,10 +220,10 @@
     },
     "commonmark": {
       "Package": "commonmark",
-      "Version": "1.9.5",
+      "Version": "2.0.0",
       "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "4ac08754c8ed35996b7c343fbb22885a"
+      "Repository": "RSPM",
+      "Hash": "8cba62334c1088d21689d353a7e87663"
     },
     "cpp11": {
       "Package": "cpp11",
@@ -416,7 +438,7 @@
     },
     "httr2": {
       "Package": "httr2",
-      "Version": "1.1.2",
+      "Version": "1.2.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -433,7 +455,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "ade531519694081d91036b509eb30594"
+      "Hash": "d3227df6f9187d9edd3a51b6346d758d"
     },
     "isoband": {
       "Package": "isoband",
@@ -601,11 +623,23 @@
       ],
       "Hash": "05ce1ed077e8c97fbb3ec1cb078f1159"
     },
-    "pillar": {
-      "Package": "pillar",
-      "Version": "1.10.2",
+    "packrat": {
+      "Package": "packrat",
+      "Version": "0.9.3",
       "Source": "Repository",
       "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "tools",
+        "utils"
+      ],
+      "Hash": "d3289899c84c65def1a783ea0a9ea0eb"
+    },
+    "pillar": {
+      "Package": "pillar",
+      "Version": "1.11.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
       "Requirements": [
         "cli",
         "glue",
@@ -615,7 +649,7 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "1098920a19b5cd5a15bacdc74a89979d"
+      "Hash": "10344e4bdafc6725ed83c3d6b756f4d9"
     },
     "pkgconfig": {
       "Package": "pkgconfig",
@@ -669,7 +703,7 @@
     },
     "purrr": {
       "Package": "purrr",
-      "Version": "1.0.4",
+      "Version": "1.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -680,7 +714,7 @@
         "rlang",
         "vctrs"
       ],
-      "Hash": "cc8b5d43f90551fa6df0a6be5d640a4f"
+      "Hash": "9240cfb47489133f809918a0d3cc60cb"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -712,6 +746,38 @@
         "utils"
       ],
       "Hash": "892124978869b74935dc3934c42bfe5a"
+    },
+    "rsconnect": {
+      "Package": "rsconnect",
+      "Version": "1.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "PKI",
+        "R",
+        "cli",
+        "curl",
+        "digest",
+        "jsonlite",
+        "lifecycle",
+        "openssl",
+        "packrat",
+        "renv",
+        "rlang",
+        "rstudioapi",
+        "snowflakeauth",
+        "tools",
+        "utils",
+        "yaml"
+      ],
+      "Hash": "43ac7d36cea2d468918e604c9e823e80"
+    },
+    "rstudioapi": {
+      "Package": "rstudioapi",
+      "Version": "0.17.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "5f90cd73946d706cfe26024294236113"
     },
     "sass": {
       "Package": "sass",
@@ -748,9 +814,9 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.11.0",
+      "Version": "1.11.1",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Requirements": [
         "R",
         "R6",
@@ -777,7 +843,21 @@
         "withr",
         "xtable"
       ],
-      "Hash": "011db3556755012e632ed99d083d7d75"
+      "Hash": "1c1a2437351984ff592639ae28cda09e"
+    },
+    "snowflakeauth": {
+      "Package": "snowflakeauth",
+      "Version": "0.1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "RcppTOML",
+        "cli",
+        "curl",
+        "jsonlite",
+        "rlang"
+      ],
+      "Hash": "e32f00aeec04ec7d1151dde27ea065b8"
     },
     "sourcetools": {
       "Package": "sourcetools",
@@ -936,6 +1016,13 @@
         "utils"
       ],
       "Hash": "b8acdf8af494d9ec19ccb2481a9b11c2"
+    },
+    "yaml": {
+      "Package": "yaml",
+      "Version": "2.3.10",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "51dab85c6c98e50a18d7551e9d49f76c"
     }
   }
 }
