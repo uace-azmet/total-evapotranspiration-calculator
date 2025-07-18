@@ -30,67 +30,6 @@ ui <- htmltools::htmlTemplate(
   )
 ) # htmltools::htmlTemplate()
   
-  # sidebarLayout = sidebarLayout(
-  #   position = "left",
-  #   
-  #   sidebarPanel(
-  #     id = "sidebarPanel",
-  #     width = 4,
-  #     
-  #     verticalLayout(
-  #       helpText(em(
-  #         "Select an AZMet station, specify the equation to calculate evapotranspiration, and set dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL EVAPOTRANSPIRATION'."
-  #       )),
-  #       
-  #       br(),
-  #       selectInput(
-  #         inputId = "azmetStation", 
-  #         label = "AZMet Station",
-  #         choices = azmetStations[order(azmetStations$stationName), ]$stationName,
-  #         selected = "Aguila"
-  #       ),
-  #       
-  #       selectInput(
-  #         inputId = "etEquation",
-  #         label = "Equation",
-  #         choices = etEquations,
-  #         selected = "Penman-Monteith"
-  #       ),
-  #       
-  #       dateInput(
-  #         inputId = "startDate",
-  #         label = "Start Date",
-  #         value = initialStartDate,
-  #         min = Sys.Date() - lubridate::years(1),
-  #         max = Sys.Date() - 1,
-  #         format = "MM d, yyyy",
-  #         startview = "month",
-  #         weekstart = 0, # Sunday
-  #         width = "100%",
-  #         autoclose = TRUE
-  #       ),
-  #       
-  #       dateInput(
-  #         inputId = "endDate",
-  #         label = "End Date",
-  #         value = initialEndDate,
-  #         min = Sys.Date() - lubridate::years(1),
-  #         max = initialEndDate,
-  #         format = "MM d, yyyy",
-  #         startview = "month",
-  #         weekstart = 0, # Sunday
-  #         width = "100%",
-  #         autoclose = TRUE
-  #       ),
-  #       
-  #       br(),
-  #       actionButton(
-  #         inputId = "calculateTotalET", 
-  #         label = "CALCULATE TOTAL EVAPOTRANSPIRATION",
-  #         class = "btn btn-block btn-blue"
-  #       )
-  #     )
-  #   ), # sidebarPanel()
     
     # mainPanel(
     #   id = "mainPanel",
@@ -124,7 +63,6 @@ ui <- htmltools::htmlTemplate(
     #   ),
     #   br()
     # ) # mainPanel()
-  #) # sidebarLayout()
 
 
 # Server --------------------
@@ -133,6 +71,11 @@ server <- function(input, output, session) {
   
   # Observables -----
   
+  shiny::observeEvent(input$calculateTotal, {
+    if (input$startDate > input$endDate) {
+      shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
+    }
+  })
   
   # Reactive events -----
   

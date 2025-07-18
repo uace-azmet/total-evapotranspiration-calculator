@@ -62,7 +62,7 @@ sidebar <- bslib::sidebar(
   ),
   
   shiny::actionButton(
-    inputId = "calculateTotalEvapotranspiration", 
+    inputId = "calculateTotal", 
     label = "CALCULATE TOTAL",
     class = "btn btn-block btn-blue"
   )    
