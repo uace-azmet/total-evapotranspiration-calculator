@@ -14,12 +14,21 @@ sidebar <- bslib::sidebar(
   htmltools::p(
     bsicons::bs_icon("sliders"), 
     htmltools::HTML("&nbsp;"), 
-    "DATA OPTIONS"
+    "DATA OPTIONS",
+    htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"),
+    bslib::tooltip(
+      bsicons::bs_icon("info-circle"),
+      "Select an AZMet station, evapotranspiration equation, and dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL'.",
+      id = "infoDataOptions",
+      placement = "right"
+    )
   ),
   
-  shiny::helpText(
-    "Select an AZMet station, specify the equation to calculate evapotranspiration, and set dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL'."
-  ),
+  htmltools::br(),
+  
+  # shiny::helpText(
+  #   "Select an AZMet station, evapotranspiration equation, and dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL'."
+  # ),
   
   shiny::selectInput(
     inputId = "azmetStation", 

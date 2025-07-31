@@ -84,7 +84,7 @@ server <- function(input, output, session) {
     shinyjs::showElement("pageBottomText")
   })
   
-  
+
   # Reactives -----
   
   dailyData <- shiny::eventReactive(input$calculateTotal, {
