@@ -14,7 +14,7 @@ ui <- htmltools::htmlTemplate(
     bslib::layout_sidebar(
       sidebar = sidebar, # `scr##_sidebar.R`
       
-      # shiny::htmlOutput(outputId = "figureTitle"),
+      shiny::htmlOutput(outputId = "figureTitle"),
       # shiny::htmlOutput(outputId = "figureSummary"),
       # shiny::htmlOutput(outputId = "figureHelpText"),
       # #shiny::plotOutput(outputId = "figure"),
@@ -187,21 +187,13 @@ server <- function(input, output, session) {
   #   )
   # })
   
-  # Build figure title
-  # figureTitle <- eventReactive(input$calculateTotalET, {
-  #   validate(
-  #     need(
-  #       expr = input$startDate <= input$endDate, 
-  #       message = "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
-  #     ),
-  #     errorClass = "datepicker"
-  #   )
-  # 
-  #   fxnFigureTitle(
-  #     endDate = input$endDate, 
-  #     inData = dataAZMetDataMerge()
-  #   )
-  # })
+  figureTitle <- shiny::eventReactive(dailyData(), {
+    fxn_figureTitle(
+      azmetStation = input$azmetStation
+      # endDate = input$endDate,
+      # inData = dataAZMetDataMerge()
+    )
+  })
   
   
   # Outputs -----
@@ -231,9 +223,9 @@ server <- function(input, output, session) {
   #   figureSubtitle()
   # })
   
-  # output$figureTitle <- renderUI({
-  #   figureTitle()
-  # })
+  output$figureTitle <- shiny::renderUI({
+    figureTitle()
+  })
 }
 
 # Run --------------------

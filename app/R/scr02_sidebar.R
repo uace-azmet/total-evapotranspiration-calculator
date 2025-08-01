@@ -24,7 +24,7 @@ sidebar <- bslib::sidebar(
     )
   ),
   
-  htmltools::br(),
+  # htmltools::br(),
   
   # shiny::helpText(
   #   "Select an AZMet station, evapotranspiration equation, and dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL'."

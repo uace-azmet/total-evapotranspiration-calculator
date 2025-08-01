@@ -1,0 +1,36 @@
+#' `fxn_figureTitle.R` - Build title for figure
+#' 
+#' @param azmetStation - AZMet station selection by user
+#' @param endDate - End date of period of interest
+#' @param inData - data table of seasonal total ET values by year
+#' @return `figureTitle` - Title for figure based on selected station
+
+
+fxn_figureTitle <- function(azmetStation) {
+  figureTitle <- 
+    htmltools::p(
+      htmltools::HTML(
+        paste0(
+          bsicons::bs_icon("graph-up"), 
+          htmltools::HTML("&nbsp;"),
+          htmltools::HTML("&nbsp;"),
+          toupper(
+            paste0(
+              "Cumulative Heat Units at the AZMet ", azmetStation, " Station"
+            )
+          ),
+          htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"),
+          bslib::tooltip(
+            bsicons::bs_icon("info-circle"),
+            "Hover over bars for values of total evapotranspiration.",
+            id = "infoFigureTitle",
+            placement = "right"
+          )
+        ),
+      ),
+      
+      class = "figure-title"
+    )
+  
+  return(figureTitle)
+}
