@@ -7,6 +7,7 @@ library(dplyr)
 library(ggplot2)
 library(htmltools)
 library(lubridate)
+library(plotly)
 library(shiny)
 library(shinyjs)
 library(vroom)
@@ -23,7 +24,7 @@ library(vroom)
 
 # Variables --------------------
 
-apiStartDate <- as.Date("2021-01-01")
+# apiStartDate <- as.Date("2021-01-01")
 
 # Omit for now, as previous years are not complete and conditional statements to handle this are not in place
 # azmetStations <- azmetStations |>

@@ -18,7 +18,7 @@ ui <- htmltools::htmlTemplate(
       # shiny::htmlOutput(outputId = "figureSummary"),
       # shiny::htmlOutput(outputId = "figureHelpText"),
       # #shiny::plotOutput(outputId = "figure"),
-      # plotly::plotlyOutput(outputId = "figure"),
+      plotly::plotlyOutput(outputId = "figure"),
       # shiny::htmlOutput(outputId = "figureFooter")
     ) |>
       htmltools::tagAppendAttributes(
@@ -80,14 +80,14 @@ server <- function(input, output, session) {
     }
   })
   
-  shiny::observeEvent(dailyData(), {
+  shiny::observeEvent(seasonalTotals(), {
     shinyjs::showElement("pageBottomText")
   })
   
 
   # Reactives -----
   
-  dailyData <- shiny::eventReactive(input$calculateTotal, {
+  seasonalTotals <- shiny::eventReactive(input$calculateTotal, {
     shiny::validate(
       shiny::need(
         expr = input$startDate <= input$endDate,
@@ -109,10 +109,11 @@ server <- function(input, output, session) {
       add = TRUE
     )
 
-    fxn_dailyData(
+    fxn_seasonalTotals(
       azmetStation = input$azmetStation,
       startDate = input$startDate,
-      endDate = input$endDate
+      endDate = input$endDate,
+      etEquation = input$etEquation
     )
   })
   
@@ -187,7 +188,14 @@ server <- function(input, output, session) {
   #   )
   # })
   
-  figureTitle <- shiny::eventReactive(dailyData(), {
+  figure <- shiny::eventReactive(seasonalTotals(), {
+    fxn_figure(
+      inData = seasonalTotals(),
+      azmetStation = input$azmetStation
+    )
+  })
+  
+  figureTitle <- shiny::eventReactive(seasonalTotals(), {
     fxn_figureTitle(
       azmetStation = input$azmetStation
       # endDate = input$endDate,
@@ -198,8 +206,16 @@ server <- function(input, output, session) {
   
   # Outputs -----
   
+  output$figure <- plotly::renderPlotly({
+    figure()
+  })
+  
+  output$figureTitle <- shiny::renderUI({
+    figureTitle()
+  })
+  
   output$pageBottomText <- shiny::renderUI({
-    #shiny::req(dailyData())
+    #shiny::req(seasonalTotals())
     fxn_pageBottomText()
   })
   
@@ -223,9 +239,7 @@ server <- function(input, output, session) {
   #   figureSubtitle()
   # })
   
-  output$figureTitle <- shiny::renderUI({
-    figureTitle()
-  })
+  
 }
 
 # Run --------------------

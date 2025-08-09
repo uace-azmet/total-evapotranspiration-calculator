@@ -13,12 +13,7 @@ fxn_dailyData <- function(azmetStation, startDate, endDate) {
     start_date = startDate, 
     end_date = endDate
   ) %>% 
-    
-    dplyr::select(all_of(c(dailyVarsID, dailyVarsMeasured, dailyVarsDerived))) #%>%
-    
-    # dplyr::mutate(
-    #   dplyr::across("wind_2min_timestamp", as.character)
-    # )
+    dplyr::select(all_of(c(dailyVarsID, dailyVarsMeasured, dailyVarsDerived)))
   
   return(dailyData)
 }
