@@ -1,8 +1,6 @@
 #' `fxn_figureTitle.R` - Build title for figure
 #' 
 #' @param azmetStation - AZMet station selection by user
-#' @param endDate - End date of period of interest
-#' @param inData - data table of seasonal total ET values by year
 #' @return `figureTitle` - Title for figure based on selected station
 
 
@@ -16,7 +14,7 @@ fxn_figureTitle <- function(azmetStation) {
           htmltools::HTML("&nbsp;"),
           toupper(
             paste0(
-              "Total Evapotranspiration (ET) at the AZMet ", azmetStation, " Station"
+              "Total Evapotranspiration at the AZMet ", azmetStation, " Station"
             )
           ),
           htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"),

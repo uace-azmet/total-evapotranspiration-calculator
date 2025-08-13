@@ -24,14 +24,6 @@ library(vroom)
 
 # Variables --------------------
 
-# apiStartDate <- as.Date("2021-01-01")
-
-# Omit for now, as previous years are not complete and conditional statements to handle this are not in place
-# azmetStations <- azmetStations |>
-#   dplyr::filter(stationName != "Mohave ETo") |>
-#   dplyr::filter(stationName != "Wellton ETo") |>
-#   dplyr::filter(stationName != "Yuma Valley ETo")
-
 azmetStationMetadata <- azmetr::station_info |>
   dplyr::mutate(end_date = NA) |> # Placeholder until inactive stations are in API and `azmetr`
   dplyr::mutate(
@@ -40,7 +32,8 @@ azmetStationMetadata <- azmetr::station_info |>
       lubridate::today(tzone = "America/Phoenix") - 1,
       end_date
     )
-  )
+  ) |>
+  dplyr::filter(!meta_station_name %in% c("Test", "Chino Valley", "Elgin", "Mohave ETo", "Wellton ETo", "Yuma Valley ETo"))
 
 # Derived (after data retrieved from station) variables
 dailyVarsDerived <- 

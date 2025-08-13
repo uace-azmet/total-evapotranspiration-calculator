@@ -41,9 +41,9 @@ fxn_figure <- function(inData, azmetStation) {
       showlegend = FALSE,
       hoverinfo = "text",
       hovertext = ~paste0(
-        "<br><b>AZMet station:</b>  ", azmetStation,
+        "<br><b>AZMet Station:</b>  ", azmetStation,
         "<br><b>Year:</b>  ", dateYearLabel,
-        "<br><b>Total ET:</b>  ", etTotalLabel
+        "<br><b>Total:</b>  ", etTotalLabel, " inches"
       ),
       type = "bar"
     ) %>% 
@@ -58,9 +58,9 @@ fxn_figure <- function(inData, azmetStation) {
       showlegend = FALSE,
       hoverinfo = "text",
       hovertext = ~paste0(
-        "<br><b>AZMet station:</b>  ", azmetStation,
+        "<br><b>AZMet Station:</b>  ", azmetStation,
         "<br><b>Year:</b>  ", dateYearLabel,
-        "<br><b>Total ET:</b>  ", etTotalLabel
+        "<br><b>Total:</b>  ", etTotalLabel, " inches"
       ),
       type = "bar"
     ) %>%
@@ -99,7 +99,7 @@ fxn_figure <- function(inData, azmetStation) {
       ),
       margin = list(
         l = 0,
-        r = 200, # For space between plot and modebar
+        r = 0, # For space between plot and modebar
         b = 0,
         t = 10, # For space to show `3400` tick
         pad = 3 # For space between gridlines and yaxis labels
@@ -108,6 +108,17 @@ fxn_figure <- function(inData, azmetStation) {
         bgcolor = "#FFFFFF",
         orientation = "v"
       ),
+      shapes =
+        list(
+          type = "line",
+          line = list(color = "blue", dash = "dot", width = "4px"),
+          x0 = 0,
+          x1 = 1,
+          xref = "paper",
+          y0 = 25, # Peak Bloom (Short)
+          y1 = 25, # Peak Bloom (Long)
+          yref = "y"
+        ),
       xaxis = list(
         fixedrange = TRUE,
         linewidth = 0,

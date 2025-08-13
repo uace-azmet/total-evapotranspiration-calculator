@@ -1,9 +1,12 @@
 #' `fxn_pageBottomText.R` - Build supporting text for page
 #' 
+#' @param startDate - Start date of period of interest
+#' @param endDate - End date of period of interest
+#' @param etEquation - ET equation selection by user
 #' @return `pageBottomText` - Supporting text for page
 
 
-fxn_pageBottomText <- function() {
+fxn_pageBottomText <- function(startDate, endDate, etEquation) {
   
   # Define inputs -----
   
@@ -25,16 +28,15 @@ fxn_pageBottomText <- function() {
     target="_blank"
   )
   
-  # `firstParagraph`
-  # if (etEquation == "Original AZMet") {
-  #   firstParagraph <- paste0(
-  #     "Total evapotranspiration for the current growing season (dark gray bar in graph) is based on the sum of daily totals from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " and as estimated by the ", etEquation, " equation. Totals for past seasons (gray bars in graph) are based on the same start and end month and day, but during those respective years. More information about this equation is in Extension bulletin ", bulletinURL, "."
-  #   )
-  # } else { # etEquation == "Penman-Monteith"
-  #   firstParagraph <- paste0(
-  #     "Total evapotranspiration for the current growing season (dark gray bar in graph) is based on the sum of daily totals from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " and as estimated by the ", etEquation, " equation. Totals for past seasons (gray bars in graph) are based on the same start and end month and day, but during those respective years. More information about this equation is in Extension bulletin ", bulletinURL, ". Evapotranspiration totals based on the Penman-Monteith equation assume a location of extensive, well-watered grass or other dense, uniform vegetation. Non-standard surfaces at some stations may relatively raise temperature and lower humidity, and potentially result in an overestimation of evapotranspiration."
-  #   )
-  # }
+  if (etEquation == "Original AZMet") {
+    firstParagraph <- paste0(
+      "Total evapotranspiration for the current growing season (black bar in graph) is based on the sum of daily totals from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " and as estimated by the ", etEquation, " equation. Totals for past seasons (gray bars in graph) are based on the same start and end month and day, but during those respective years. More information about this equation is in Extension bulletin ", bulletinURL, "."
+    )
+  } else { # etEquation == "Penman-Monteith"
+    firstParagraph <- paste0(
+      "Total evapotranspiration for the current growing season (black bar in graph) is based on the sum of daily totals from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " and as estimated by the ", etEquation, " equation. Totals for past seasons (gray bars in graph) are based on the same start and end month and day, but during those respective years. More information about this equation is in Extension bulletin ", bulletinURL, ". Evapotranspiration totals based on the Penman-Monteith equation assume a location of extensive, well-watered grass or other dense, uniform vegetation. Non-standard surfaces at some stations may relatively raise temperature and lower humidity, and potentially result in an overestimation of evapotranspiration."
+    )
+  }
   
   todayDate <- gsub(" 0", " ", format(lubridate::today(), "%B %d, %Y"))
   
@@ -77,7 +79,9 @@ fxn_pageBottomText <- function() {
     htmltools::p(
       htmltools::HTML(
         paste0(
-          "AZMet daily data are from ", apiURL, " and accessed using the ", azmetrURL, " R package. Values from recent dates may be based on provisional data. More information about ", webpageDataVariables, ", ", webpageNetworkMap, ", and ", webpageStationMetadata, " is available on the ", webpageAZMet, ". Users of AZMet data and related information assume all risks of its use.",
+          firstParagraph,
+          htmltools::br(), htmltools::br(),
+          "Daily AZMet data are from ", apiURL, " and accessed using the ", azmetrURL, " R package. Values from recent dates may be based on provisional data. More information about ", webpageDataVariables, ", ", webpageNetworkMap, ", and ", webpageStationMetadata, " is available on the ", webpageAZMet, ". Users of AZMet data and related information assume all risks of its use.",
           htmltools::br(), htmltools::br(),
           "To cite the above AZMet data, please use: 'Arizona Meteorological Network (", todayYear, ") Arizona Meteorological Network (AZMet) Data. https:://azmet.arizona.edu. Accessed ", todayDate, "', along with 'Arizona Meteorological Network (", todayYear, ") Total Evapotranspiration Calculator. https://viz.datascience.arizona.edu/azmet/total-evapotranspiration-calculator. Accessed ", todayDate, "'.",
           htmltools::br(), htmltools::br(),

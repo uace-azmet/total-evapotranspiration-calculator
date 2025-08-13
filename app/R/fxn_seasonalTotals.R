@@ -37,20 +37,20 @@ fxn_seasonalTotals <- function(azmetStation, startDate, endDate, etEquation) {
     
     # Account for multi-month absence of YUG data in 2021
     if (azmetStation == "Yuma N.Gila") {
-      nodataDateRange <- 
+      nodataDateRange <-
         lubridate::interval(
-          start = lubridate::date("2021-06-16"), 
+          start = lubridate::date("2021-06-16"),
           end = lubridate::date("2021-10-21")
         )
-      
+
       userDateRange <- lubridate::interval(start = startDate, end = endDate)
-      
+
       if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = userDateRange) == TRUE) {
         etTotal$etTotal <- 0.00
-        etTotal$etTotalLabel <- "NA" 
+        etTotal$etTotalLabel <- "NA"
       }
     }
-    
+
     if (exists("seasonalTotals") == FALSE) {
       seasonalTotals <- etTotal
     } else {
@@ -59,6 +59,12 @@ fxn_seasonalTotals <- function(azmetStation, startDate, endDate, etEquation) {
     
     startDate <- min(seq(lubridate::date(startDate), length = 2, by = "-1 year"))
     endDate <- min(seq(lubridate::date(endDate), length = 2, by = "-1 year"))
+  }
+  
+  # Account for multi-month absence of YUG data in 2021
+  if (azmetStation == "Yuma N.Gila") {
+    seasonalTotals <- seasonalTotals %>% 
+      dplyr::filter(etTotalLabel != "NA")
   }
   
   return(seasonalTotals)
