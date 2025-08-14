@@ -18,21 +18,21 @@ fxn_figureSummary <- function(azmetStation, inData, startDate, endDate) {
   differenceAverage <- currentYearTotal - averageTotal
   differencePreviousYear <- currentYearTotal - previousYearTotal
   
-  if (differenceAverage == 0) {
-    differenceAverageText <- "the same as"
-  } else if (differenceAverage > 0) {
+  if (round(differenceAverage, digits = 2) > 0) {
     differenceAverageText <- 
       paste0(
-        format(abs(round(differenceAverage, digits = 2)), nsmall = 2), " inches greater than"
+        format(abs(round(differenceAverage, digits = 2)), nsmall = 2), " inches above"
       )
-  } else { # if (differenceAverage < 0)
+  } else if (round(differenceAverage, digits = 2) < 0) {
     differenceAverageText <- 
       paste0(
-        format(abs(round(differenceAverage, digits = 2)), nsmall = 2), " inches less than"
+        format(abs(round(differenceAverage, digits = 2)), nsmall = 2), " inches below"
       )
+  } else { # if (differenceAverage = 0)
+    differenceAverageText <- "equal to"
   }
   
-  if (differencePreviousYear == 0) {
+  if (differencePreviousYear == 0.00) {
     differencePreviousYearText <- "the same as"
   } else if (differencePreviousYear > 0) {
     differencePreviousYearText <- 
@@ -62,7 +62,7 @@ fxn_figureSummary <- function(azmetStation, inData, startDate, endDate) {
       htmltools::p(
         htmltools::HTML(
           paste0(
-            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>. This is ", differencePreviousYearText, " the total during this same month-day period in ", previousYearText, ", and ", differenceAverageText, " the average total, as calculated from the below values."
+            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>. This is ", differencePreviousYearText, " the total during this same month-day period in ", previousYearText, ", and ", differenceAverageText, " the station average."
           ),
         ),
         

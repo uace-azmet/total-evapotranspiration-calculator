@@ -38,6 +38,32 @@ server <- function(input, output, session) {
   
   # Observables -----
   
+  shiny::observeEvent(input$azmetStation, {
+    stationStartDate <-
+      dplyr::filter(
+        azmetStationMetadata,
+        meta_station_name == input$azmetStation
+      )$start_date
+
+    if (stationStartDate > Sys.Date() - lubridate::years(1)) {
+      shiny::updateDateInput(
+        inputId = "startDate",
+        label = "Start Date",
+        value = stationStartDate,
+        min = stationStartDate,
+        max = Sys.Date() - 1
+      )
+    } else {
+      shiny::updateDateInput(
+        inputId = "startDate",
+        label = "Start Date",
+        value = input$startDate,
+        min = Sys.Date() - lubridate::years(1),
+        max = Sys.Date() - 1
+      )
+    }
+  })
+  
   shiny::observeEvent(input$calculateTotal, {
     if (input$startDate > input$endDate) {
       shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`

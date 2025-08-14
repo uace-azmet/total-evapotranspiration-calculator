@@ -15,6 +15,8 @@ fxn_figure <- function(inData, azmetStation) {
   
   # Inputs -----
   
+  averageTotal <- mean(inData$etTotal, na.rm = TRUE)
+  
   dataCurrentYear <- inData %>% 
     dplyr::filter(endDateYear == max(endDateYear)) %>%
     dplyr::mutate(endDateYear = as.factor(endDateYear))
@@ -24,6 +26,8 @@ fxn_figure <- function(inData, azmetStation) {
     dplyr::filter(endDateYear != max(endDateYear)) %>% 
     dplyr::mutate(endDateYear = as.factor(endDateYear))
     #dplyr::mutate(dateYearLabel = as.factor(dateYearLabel))
+  
+  layoutFontFamily <- "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
   
   ticktext <- inData$dateYearLabel
   tickvals <- inData$endDateYear
@@ -86,14 +90,33 @@ fxn_figure <- function(inData, azmetStation) {
     ) %>%
     
     plotly::layout(
+      annotations = list(
+        align = "left",
+        font = 
+          list(
+            color = "#191919",
+            family = layoutFontFamily,
+            size = 14
+          ),
+        showarrow = FALSE,
+        text = paste("Average: ", format(abs(round(averageTotal, digits = 2)), nsmall = 2), " inches"),
+        x = 0,
+        xanchor = "left",
+        xref = "paper",
+        xshift = 12,
+        y = averageTotal,
+        yanchor = "bottom",
+        yref = "y",
+        yshift = 0
+      ),
       font = list(
         color = "#191919",
-        family = "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        family = layoutFontFamily,
         size = 13
       ),
       hoverlabel = list(
         font = list(
-          family = "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+          family = layoutFontFamily,
           size = 14
         )
       ),
@@ -111,12 +134,17 @@ fxn_figure <- function(inData, azmetStation) {
       shapes =
         list(
           type = "line",
-          line = list(color = "blue", dash = "dot", width = "4px"),
+          layer = "above",
+          line = list(
+            color = "#191919", 
+            dash = "solid",
+            width = 1
+          ),
           x0 = 0,
           x1 = 1,
           xref = "paper",
-          y0 = 25, # Peak Bloom (Short)
-          y1 = 25, # Peak Bloom (Long)
+          y0 = averageTotal,
+          y1 = averageTotal,
           yref = "y"
         ),
       xaxis = list(

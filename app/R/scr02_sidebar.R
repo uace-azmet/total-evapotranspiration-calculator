@@ -33,8 +33,8 @@ sidebar <- bslib::sidebar(
   shiny::selectInput(
     inputId = "azmetStation", 
     label = "AZMet Station",
-    choices = azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name, # see `app.R`, shiny::updateSelectInput(inputId = "azmetStation")
-    selected = azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1] # see `app.R`, shiny::updateSelectInput(inputId = "azmetStation")
+    choices = azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name,
+    selected = azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
   ),
   
   shiny::selectInput(
@@ -47,8 +47,8 @@ sidebar <- bslib::sidebar(
   shiny::dateInput(
     inputId = "startDate",
     label = "Start Date",
-    value = Sys.Date() - lubridate::dmonths(x = 1),
-    min = Sys.Date() - lubridate::years(1),
+    value = Sys.Date() - lubridate::dweeks(x = 1),
+    min = Sys.Date() - lubridate::years(1), # see `app.R`, shiny::updateDateInput()
     max = Sys.Date() - 1,
     format = "MM d, yyyy",
     startview = "month",

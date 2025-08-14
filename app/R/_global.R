@@ -33,7 +33,7 @@ azmetStationMetadata <- azmetr::station_info |>
       end_date
     )
   ) |>
-  dplyr::filter(!meta_station_name %in% c("Test", "Chino Valley", "Elgin", "Mohave ETo", "Wellton ETo", "Yuma Valley ETo"))
+  dplyr::filter(!meta_station_name %in% c("Test"))#, "Chino Valley", "Elgin", "Mohave ETo", "Wellton ETo", "Yuma Valley ETo"))
 
 # Derived (after data retrieved from station) variables
 dailyVarsDerived <- 
@@ -127,3 +127,6 @@ dailyVarsMeasured <-
   )
 
 etEquations <- c("Original AZMet", "Penman-Monteith")
+
+# Initialize, part of keeping `input$startDate` tied to individual station records
+#minimumStartDate <- shiny::reactiveVal(value = Sys.Date() - lubridate::years(1))

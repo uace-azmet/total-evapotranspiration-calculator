@@ -15,7 +15,7 @@ fxn_figureFooter <- function(azmetStation, startDate, endDate) {
   
   standardText <- 
     paste0(
-      "Data for the ", azmetStation, " station in the new AZMet database currently go back to ", 
+      "Average total evapotranspiration is calculated from values of all individual years shown above. Data for the ", azmetStation, " station in the new AZMet database currently go back to ", 
       gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")),
       "."
     )
