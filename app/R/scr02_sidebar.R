@@ -21,10 +21,10 @@ sidebar <- bslib::sidebar(
       "Select an AZMet station, evapotranspiration equation, and dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL'.",
       id = "infoDataOptions",
       placement = "right"
-    )
+    ),
+    
+    class = "data-options-title"
   ),
-  
-  # htmltools::br(),
   
   # shiny::helpText(
   #   "Select an AZMet station, evapotranspiration equation, and dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL'."
@@ -48,7 +48,7 @@ sidebar <- bslib::sidebar(
     inputId = "startDate",
     label = "Start Date",
     value = Sys.Date() - lubridate::dweeks(x = 1),
-    min = Sys.Date() - lubridate::years(1), # see `app.R`, shiny::updateDateInput()
+    min = initialStartDateMinimum,
     max = Sys.Date() - 1,
     format = "MM d, yyyy",
     startview = "month",

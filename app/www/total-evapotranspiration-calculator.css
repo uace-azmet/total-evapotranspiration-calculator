@@ -72,6 +72,19 @@
   font-weight: bold;
 }
 
+
+
+.data-options-title {
+  padding-bottom: 1rem !important;
+}
+
+.figure-title {
+  padding-bottom: 1rem !important;
+}
+
+
+
+
 .datepicker {
   background-color: #FFFFFF !important;
   box-shadow: 0 -6px 12px rgb(var(--bs-body-color-rgb, 0, 0, 0), 0.1);

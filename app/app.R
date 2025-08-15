@@ -44,24 +44,42 @@ server <- function(input, output, session) {
         azmetStationMetadata,
         meta_station_name == input$azmetStation
       )$start_date
-
+    
     if (stationStartDate > Sys.Date() - lubridate::years(1)) {
-      shiny::updateDateInput(
-        inputId = "startDate",
-        label = "Start Date",
-        value = stationStartDate,
-        min = stationStartDate,
-        max = Sys.Date() - 1
-      )
+      stationStartDateMinimum <- stationStartDate
+      stationEndDateMinimum <- stationStartDate
     } else {
-      shiny::updateDateInput(
-        inputId = "startDate",
-        label = "Start Date",
-        value = input$startDate,
-        min = Sys.Date() - lubridate::years(1),
-        max = Sys.Date() - 1
-      )
+      stationStartDateMinimum <- Sys.Date() - lubridate::years(1)
+      stationEndDateMinimum <- Sys.Date() - lubridate::years(1)
     }
+    
+    if (stationStartDate > input$startDate) {
+      stationStartDateSelected <- stationStartDate
+    } else {
+      stationStartDateSelected <- input$startDate
+    }
+    
+    if (stationStartDate > input$endDate) {
+      stationEndDateSelected <- stationStartDate
+    } else {
+      stationEndDateSelected <- input$endDate
+    }
+    
+    shiny::updateDateInput(
+      inputId = "startDate",
+      label = "Start Date",
+      value = stationStartDateSelected,
+      min = stationStartDateMinimum,
+      max = Sys.Date() - 1
+    )
+    
+    shiny::updateDateInput(
+      inputId = "endDate",
+      label = "End Date",
+      value = stationEndDateSelected,
+      min = stationEndDateMinimum,
+      max = Sys.Date() - 1
+    )
   })
   
   shiny::observeEvent(input$calculateTotal, {

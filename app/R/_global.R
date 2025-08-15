@@ -33,6 +33,13 @@ azmetStationMetadata <- azmetr::station_info |>
       end_date
     )
   ) |>
+  dplyr::mutate(
+    start_date = dplyr::if_else(
+      meta_station_name == "Mohave ETo",
+      lubridate::date("2024-06-20"), # When solar radiation measurements started
+      start_date
+    )
+  ) |>
   dplyr::filter(!meta_station_name %in% c("Test"))#, "Chino Valley", "Elgin", "Mohave ETo", "Wellton ETo", "Yuma Valley ETo"))
 
 # Derived (after data retrieved from station) variables
@@ -128,5 +135,23 @@ dailyVarsMeasured <-
 
 etEquations <- c("Original AZMet", "Penman-Monteith")
 
-# Initialize, part of keeping `input$startDate` tied to individual station records
-#minimumStartDate <- shiny::reactiveVal(value = Sys.Date() - lubridate::years(1))
+activeStations <-
+  dplyr::filter(
+    azmetStationMetadata,
+    status == "active"
+  )
+
+initialStation <-
+  dplyr::filter(
+    activeStations,
+    meta_station_name == azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
+  )$meta_station_name
+
+initialStationStartDate <- dplyr::filter(activeStations, meta_station_name == initialStation)$start_date
+
+if (initialStationStartDate > Sys.Date() - lubridate::years(1)) {
+  initialStartDateMinimum <- initialStationStartDate
+} else {
+  initialStartDateMinimum <- Sys.Date() - lubridate::years(1)
+}
+
