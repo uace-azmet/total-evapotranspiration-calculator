@@ -36,11 +36,11 @@ azmetStationMetadata <- azmetr::station_info |>
   dplyr::mutate(
     start_date = dplyr::if_else(
       meta_station_name == "Mohave ETo",
-      lubridate::date("2024-06-20"), # When solar radiation measurements started
+      lubridate::date("2024-06-20"), # When solar radiation measurements started at MOE
       start_date
     )
   ) |>
-  dplyr::filter(!meta_station_name %in% c("Test"))#, "Chino Valley", "Elgin", "Mohave ETo", "Wellton ETo", "Yuma Valley ETo"))
+  dplyr::filter(!meta_station_name %in% c("Test"))
 
 # Derived (after data retrieved from station) variables
 dailyVarsDerived <- 
@@ -154,4 +154,3 @@ if (initialStationStartDate > Sys.Date() - lubridate::years(1)) {
 } else {
   initialStartDateMinimum <- Sys.Date() - lubridate::years(1)
 }
-

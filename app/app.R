@@ -32,8 +32,8 @@ ui <- htmltools::htmlTemplate(
 # Server --------------------
 
 server <- function(input, output, session) {
-  shinyjs::useShinyjs(html = TRUE)
-  shinyjs::hideElement("pageBottomText")
+  # shinyjs::useShinyjs(html = TRUE)
+  # shinyjs::hideElement("pageBottomText")
   
   
   # Observables -----
@@ -88,9 +88,9 @@ server <- function(input, output, session) {
     }
   })
   
-  shiny::observeEvent(seasonalTotals(), {
-    shinyjs::showElement("pageBottomText")
-  })
+  # shiny::observeEvent(seasonalTotals(), {
+  #   shinyjs::showElement("pageBottomText")
+  # })
   
 
   # Reactives -----
@@ -183,7 +183,6 @@ server <- function(input, output, session) {
   })
   
   output$pageBottomText <- shiny::renderUI({
-    #shiny::req(seasonalTotals())
     pageBottomText()
   })
 }

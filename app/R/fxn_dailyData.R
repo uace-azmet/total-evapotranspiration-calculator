@@ -13,7 +13,7 @@ fxn_dailyData <- function(azmetStation, startDate, endDate) {
     start_date = startDate, 
     end_date = endDate
   ) %>% 
-    dplyr::select(all_of(c(dailyVarsID, dailyVarsMeasured, dailyVarsDerived)))
+    dplyr::select(all_of(c(dailyVarsID, dailyVarsMeasured, dailyVarsDerived))) # Defined in `_global.R`
   
   return(dailyData)
 }

@@ -4,7 +4,7 @@
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param etEquation - ET equation selection by user
+#' @param etEquation - Evapotranspiration equation selection by user
 #' @return `etTotal` - Data table with total evapotranspiration for a single season of an individual year
 
 

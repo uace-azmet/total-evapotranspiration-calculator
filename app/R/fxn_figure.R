@@ -1,6 +1,6 @@
-#' `fxn_figure` generates bar chart of cumulative heat units of current and recent years with cotton growth stage labels
+#' `fxn_figure` generates bar chart of total evapotranspiration of current and recent years
 #' 
-#' @param inData - data table of seasonal heat accumulation values by year
+#' @param inData - data table of seasonal total evapotranspiration values by year
 #' @param azmetStation - user-specified AZMet station
 #' @return `figure` - plotly figure
 
@@ -20,12 +20,10 @@ fxn_figure <- function(inData, azmetStation) {
   dataCurrentYear <- inData %>% 
     dplyr::filter(endDateYear == max(endDateYear)) %>%
     dplyr::mutate(endDateYear = as.factor(endDateYear))
-    #dplyr::mutate(dateYearLabel = as.factor(dateYearLabel))
   
   dataOtherYears <- inData %>% 
     dplyr::filter(endDateYear != max(endDateYear)) %>% 
     dplyr::mutate(endDateYear = as.factor(endDateYear))
-    #dplyr::mutate(dateYearLabel = as.factor(dateYearLabel))
   
   layoutFontFamily <- "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
   
@@ -126,7 +124,7 @@ fxn_figure <- function(inData, azmetStation) {
           l = 0,
           r = 0, # For space between plot and modebar
           b = 0,
-          t = 10, # For space to show `3400` tick
+          t = 0,
           pad = 3 # For space between gridlines and yaxis labels
         ),
         modebar = list(
@@ -263,7 +261,7 @@ fxn_figure <- function(inData, azmetStation) {
           l = 0,
           r = 0, # For space between plot and modebar
           b = 0,
-          t = 10, # For space to show `3400` tick
+          t = 0,
           pad = 3 # For space between gridlines and yaxis labels
         ),
         modebar = list(

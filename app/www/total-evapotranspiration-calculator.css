@@ -146,12 +146,12 @@
   box-shadow: 0 0 0 0.1rem #0000001A;
 }
 
-.help-block {
+/* .help-block {
   color: #989898 !important;
   font-size: 0.95rem;
   font-style: italic;
   font-weight: normal;
-}
+} */
 
 /* https://github.com/plotly/plotly.js/issues/2342
 .hovertext {
