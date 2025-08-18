@@ -72,18 +72,9 @@
   font-weight: bold;
 }
 
-
-
 .data-options-title {
   padding-bottom: 1rem !important;
 }
-
-.figure-title {
-  padding-bottom: 1rem !important;
-}
-
-
-
 
 .datepicker {
   background-color: #FFFFFF !important;
@@ -144,6 +135,10 @@
   font-weight: plain;
   margin-bottom: 0px!important;
   margin-top: 4px !important;
+}
+
+.figure-title {
+  padding-bottom: 1rem !important;
 }
 
 .form-control:focus {
@@ -218,8 +213,22 @@
   text-shadow: none !important;
 }
 
-.month.focused {
+.month.disabled {
   background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.month.disabled:hover {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused {
+  background-color: rgb(226, 233, 235) !important;
   border-color: none !important;
   color: var(--bs-body-color) !important;
   text-shadow: none !important;
@@ -236,6 +245,20 @@
   background-color: rgb(226, 233, 235) !important;
   border-color: none !important;
   color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused.disabled {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused.disabled:hover {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
   text-shadow: none !important;
 }
 
@@ -327,6 +350,13 @@
   background-color: rgb(226, 233, 235) !important;
   border-color: none !important;
   color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.year.disabled {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
   text-shadow: none !important;
 }
 
