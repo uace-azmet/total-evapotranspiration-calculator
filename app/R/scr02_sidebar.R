@@ -15,7 +15,7 @@ sidebar <- bslib::sidebar(
     bsicons::bs_icon("sliders"), 
     htmltools::HTML("&nbsp;"), 
     "DATA OPTIONS",
-    htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"),
+    htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
     bslib::tooltip(
       bsicons::bs_icon("info-circle"),
       "Select an AZMet station, evapotranspiration equation, and dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL'.",

@@ -17,7 +17,7 @@ fxn_figureTitle <- function(azmetStation) {
               "Total Evapotranspiration at the AZMet ", azmetStation, " Station"
             )
           ),
-          htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"),
+          htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
           bslib::tooltip(
             bsicons::bs_icon("info-circle"),
             "Hover over bars for values of total evapotranspiration.",
