@@ -105,6 +105,7 @@ server <- function(input, output, session) {
   figureFooter <- shiny::eventReactive(seasonalTotals(), {
     fxn_figureFooter(
       azmetStation = input$azmetStation,
+      inData = seasonalTotals(),
       startDate = input$startDate,
       endDate = input$endDate
     )
