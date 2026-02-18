@@ -45,9 +45,9 @@ fxn_figure <- function(inData, azmetStation) {
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
-          "<br><b>AZMet Station:</b>  ", azmetStation,
-          "<br><b>Year:</b>  ", dateYearLabel,
-          "<br><b>Total:</b>  ", etTotalLabel, " inches"
+          "<br><b>AZMet Station:</b> ", azmetStation,
+          "<br><b>Year:</b> ", dateYearLabel,
+          "<br><b>Total:</b> ", etTotalLabel, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -62,9 +62,9 @@ fxn_figure <- function(inData, azmetStation) {
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
-          "<br><b>AZMet Station:</b>  ", azmetStation,
-          "<br><b>Year:</b>  ", dateYearLabel,
-          "<br><b>Total:</b>  ", etTotalLabel, " inches"
+          "<br><b>AZMet Station:</b> ", azmetStation,
+          "<br><b>Year:</b> ", dateYearLabel,
+          "<br><b>Total:</b> ", etTotalLabel, " inches"
         ),
         type = "bar"
       ) %>%
@@ -182,9 +182,9 @@ fxn_figure <- function(inData, azmetStation) {
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
-          "<br><b>AZMet Station:</b>  ", azmetStation,
-          "<br><b>Year:</b>  ", dateYearLabel,
-          "<br><b>Total:</b>  ", etTotalLabel, " inches"
+          "<br><b>AZMet Station:</b> ", azmetStation,
+          "<br><b>Year:</b> ", dateYearLabel,
+          "<br><b>Total:</b> ", etTotalLabel, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -199,9 +199,9 @@ fxn_figure <- function(inData, azmetStation) {
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
-          "<br><b>AZMet Station:</b>  ", azmetStation,
-          "<br><b>Year:</b>  ", dateYearLabel,
-          "<br><b>Total:</b>  ", etTotalLabel, " inches"
+          "<br><b>AZMet Station:</b> ", azmetStation,
+          "<br><b>Year:</b> ", dateYearLabel,
+          "<br><b>Total:</b> ", etTotalLabel, " inches"
         ),
         type = "bar"
       ) %>%
