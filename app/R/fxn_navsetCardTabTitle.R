@@ -22,17 +22,17 @@ fxn_navsetCardTabTitle <- function(azmetStation, navsetCardTabTitleIcon) {
             htmltools::HTML(
               paste0(
                 "<strong>Total Evapotranspiration at the AZMet ", azmetStation, " Station</strong>"
-              )
+              ),
             )
           ),
-          htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
+          htmltools::HTML("&nbsp;"),
           bslib::tooltip(
             bsicons::bs_icon("info-circle"),
             "Select from the tabs below to view different presentations of the data.",
             id = "infoNavsetCardTabTitle",
             placement = "right"
           )
-        ),
+        )
       ),
       
       class = "navset-card-tab-title"

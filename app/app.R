@@ -147,6 +147,12 @@ server <- function(input, output, session) {
     )
   })
   
+  navsetCardTabTooltipText <- shiny::eventReactive(input$navsetCardTab, {
+    fxn_navsetCardTabTooltipText(
+      navsetCardTab = input$navsetCardTab
+    )
+  })
+  
   pageBottomText <- shiny::eventReactive(seasonalTotals(), {
     fxn_pageBottomText(
       startDate = input$startDate, 
@@ -196,16 +202,6 @@ server <- function(input, output, session) {
     barChartCaption()
   })
   
-  output$barChartInfo <- shiny::renderUI({
-    #req(dataETL())
-    bslib::tooltip(
-      bsicons::bs_icon("info-circle"),
-      "Hover over bars for values of total evapotranspiration.",
-      id = "barChartInfo",
-      placement = "right"
-    )
-  })
-  
   output$navsetCardTab <- shiny::renderUI({
     shiny::req(showNavsetCardTab())
     navsetCardTab # `scr##_navsetCardTab.R`
@@ -217,6 +213,10 @@ server <- function(input, output, session) {
   
   output$navsetCardTabTitle <- shiny::renderUI({
     navsetCardTabTitle()
+  })
+  
+  output$navsetCardTabTooltip <- shiny::renderUI({
+    navsetCardTabTooltipText()
   })
   
   output$pageBottomText <- shiny::renderUI({

@@ -74,7 +74,7 @@
   padding-bottom: 0px;
   padding-left: 24px;
   padding-right: 24px;
-  padding-top: 24px;
+  padding-top: 16px;
 }
 
 .century.active.disabled.focused {
@@ -265,13 +265,6 @@
   border-color: none !important;
   color: var(--bs-tertiary-color) !important;
   text-shadow: none !important;
-}
-
-.bar-chart-caption {
-  color: #606060; 
-  font-size: 0.85rem;
-  font-style: normal;
-  margin-top: 0.5rem;
 }
 
 .navset-card-tab-summary {
