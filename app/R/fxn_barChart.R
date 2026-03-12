@@ -1,8 +1,8 @@
-#' `fxn_figure` generates bar chart of total evapotranspiration of current and recent years
+#' `fxn_barChart` generates bar chart of total evapotranspiration of current and recent years
 #' 
 #' @param inData - data table of seasonal total evapotranspiration values by year
 #' @param azmetStation - user-specified AZMet station
-#' @return `figure` - plotly figure
+#' @return `barChart` - plotly barChart
 
 # https://plotly-r.com/ 
 # https://plotly.com/r/reference/ 
@@ -11,7 +11,7 @@
 # https://www.color-hex.com/color-palette/1041718
 
 
-fxn_figure <- function(inData, azmetStation) {
+fxn_barChart <- function(inData, azmetStation) {
   
   # Inputs -----
   
@@ -35,7 +35,7 @@ fxn_figure <- function(inData, azmetStation) {
   
   # For stations with only one year of data
   if (nrow(inData) == 1) {
-    figure <- 
+    barChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
         x = ~endDateYear,
@@ -172,7 +172,7 @@ fxn_figure <- function(inData, azmetStation) {
         )
       )
   } else {
-    figure <- 
+    barChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
         x = ~endDateYear,
@@ -310,5 +310,5 @@ fxn_figure <- function(inData, azmetStation) {
       )
   }
   
-  return(figure)
+  return(barChart)
 }

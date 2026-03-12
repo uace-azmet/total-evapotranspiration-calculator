@@ -1,19 +1,19 @@
-#' `fxn_figureSummary.R` - Build summary of figure based on user input
+#' `fxn_navsetCardTabSummary.R` - Build summary of total evapotranspiration values based on user input
 #' 
 #' @param azmetStation - AZMet station selection by user
 #' @param inData - data table of seasonal total evapotranspiration by year
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @return `figureSummary` - Summary of figure based on user inputs
+#' @return `navsetCardTabSummary` - Summary of total evapotranspiration values based on user inputs
 
 
-fxn_figureSummary <- function(azmetStation, inData, startDate, endDate) {
+fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
   currentYear <- lubridate::year(endDate)
   currentYearTotal <- dplyr::filter(inData, endDateYear == currentYear)$etTotal
   
   # For stations with only one year of data
   if (nrow(inData) == 1) {
-    figureSummary <- 
+    navsetCardTabSummary <- 
       htmltools::p(
         htmltools::HTML(
           paste0(
@@ -60,7 +60,7 @@ fxn_figureSummary <- function(azmetStation, inData, startDate, endDate) {
         )
     }
     
-    figureSummary <- 
+    navsetCardTabSummary <- 
       htmltools::p(
         htmltools::HTML(
           paste0(
@@ -68,9 +68,9 @@ fxn_figureSummary <- function(azmetStation, inData, startDate, endDate) {
           ),
         ),
         
-        class = "figure-summary"
+        class = "navset-card-tab-summary"
       )
   }
   
-  return(figureSummary)
+  return(navsetCardTabSummary)
 }

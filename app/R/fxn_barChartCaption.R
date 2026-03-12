@@ -1,13 +1,14 @@
-#' `fxn_figureFooter.R` - Build caption for figure based on user input
+#' `fxn_barChartCaption.R` - Build caption for bar chart based on user input
 #' 
 #' @param azmetStation AZMet station selection by user
 #' @param inData - data table of seasonal total evapotranspiration by year
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @return `figureFooter` Caption for figure based on selected station
+#' @param etEquation - ET equation selection by user
+#' @return `barChartCaption` Caption for bar chart based on selected station
 
 
-fxn_figureFooter <- function(azmetStation, inData, startDate, endDate) {
+fxn_barChartCaption <- function(azmetStation, inData, startDate, endDate, etEquation) {
   
   azmetStationStartDate <- 
     dplyr::filter(
@@ -18,16 +19,12 @@ fxn_figureFooter <- function(azmetStation, inData, startDate, endDate) {
   if (nrow(inData) == 1) {
     standardText <- 
       paste0(
-        "Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", 
-        gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")),
-        "."
+        "Total evapotranspiration is based on the sum of daily totals from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " and as estimated by the ", etEquation, " equation. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   } else {
     standardText <- 
       paste0(
-        "Average total evapotranspiration is calculated from values of all individual years shown above. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", 
-        gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")),
-        "."
+        "Total evapotranspiration for the current year (black bar in graph) is based on the sum of daily totals from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " and as estimated by the ", etEquation, " equation. Totals for past years (gray bars in graph) are based on the same start and end month and day, but during those respective years. Average total evapotranspiration is calculated from values of all individual years shown above. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   }
   
@@ -55,7 +52,7 @@ fxn_figureFooter <- function(azmetStation, inData, startDate, endDate) {
   
   # Generate figure footer based on presence/absence of non-operational dates
   if (azmetStation == "Yuma N.Gila" & nonOperational == 1) {
-    figureFooter <- 
+    barChartCaption <- 
       htmltools::p(
         htmltools::HTML(
           paste(
@@ -65,15 +62,15 @@ fxn_figureFooter <- function(azmetStation, inData, startDate, endDate) {
           )
         ),
         
-        class = "figure-footer"
+        class = "bar-chart-caption"
       )
   } else {
-    figureFooter <- 
+    barChartCaption <- 
       htmltools::p(
         htmltools::HTML(standardText), 
-        class = "figure-footer"
+        class = "bar-chart-caption"
       )
   }
   
-  return(figureFooter)
+  return(barChartCaption)
 }

@@ -1,5 +1,6 @@
 # Libraries --------------------
 
+
 library(azmetr)
 library(bsicons)
 library(bslib)
@@ -15,6 +16,7 @@ library(vroom)
 
 # Files --------------------
 
+
 # Functions. Loaded automatically at app start if in `R` folder
 #source("./R/fxn_functionName.R", local = TRUE)
 
@@ -23,6 +25,7 @@ library(vroom)
 
 
 # Variables --------------------
+
 
 azmetStationMetadata <- azmetr::station_info |>
   dplyr::mutate(end_date = NA) |> # Placeholder until inactive stations are in API and `azmetr`
@@ -41,6 +44,28 @@ azmetStationMetadata <- azmetr::station_info |>
     )
   ) |>
   dplyr::filter(!meta_station_name %in% c("Test"))
+
+activeStations <-
+  dplyr::filter(
+    azmetStationMetadata,
+    status == "active"
+  )
+
+etEquations <- c("Original AZMet", "Penman-Monteith")
+
+initialStation <-
+  dplyr::filter(
+    activeStations,
+    meta_station_name == azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
+  )$meta_station_name
+
+navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
+
+showNavsetCardTab <- reactiveVal(FALSE)
+showPageBottomText <- reactiveVal(FALSE)
+
+
+# Daily Data --
 
 # Derived (after data retrieved from station) variables
 dailyVarsDerived <- 
@@ -133,19 +158,8 @@ dailyVarsMeasured <-
     # "wind_vector_magnitude"
   )
 
-etEquations <- c("Original AZMet", "Penman-Monteith")
 
-activeStations <-
-  dplyr::filter(
-    azmetStationMetadata,
-    status == "active"
-  )
-
-initialStation <-
-  dplyr::filter(
-    activeStations,
-    meta_station_name == azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
-  )$meta_station_name
+# Datepicker --
 
 initialStationStartDate <- dplyr::filter(activeStations, meta_station_name == initialStation)$start_date
 
