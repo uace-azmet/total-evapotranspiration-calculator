@@ -19,9 +19,9 @@ navsetCardTab <- bslib::navset_card_tab(
   
   bslib::nav_panel(
     title = "Table",
-    value = "table"#,
+    value = "table",
     
-    #   plotly::plotlyOutput("timeseriesGraph"),
+    shiny::tableOutput("totalEvapotranspiration"),
     #   shiny::htmlOutput(outputId = "timeseriesGraphFooter")
   ),
   

@@ -28,7 +28,7 @@ fxn_navsetCardTabTitle <- function(azmetStation, navsetCardTabTitleIcon) {
           htmltools::HTML("&nbsp;"),
           bslib::tooltip(
             bsicons::bs_icon("info-circle"),
-            "Select from the tabs below to view different presentations of the data.",
+            "In addition to the following summary, select from the tabs below to view different presentations of the data.",
             id = "infoNavsetCardTabTitle",
             placement = "right"
           )

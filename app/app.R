@@ -36,7 +36,7 @@ server <- function(input, output, session) {
   
   # Observables -----
   
-  shiny::observeEvent(seasonalTotals(), {
+  shiny::observeEvent(totalEvapotranspiration(), {
     showNavsetCardTab(TRUE)
     showPageBottomText(TRUE)
     # shinyjs::showElement("pageBottomText")
@@ -105,42 +105,38 @@ server <- function(input, output, session) {
       navsetCardTabTitleIcon("graph-up")
       print("graph-up")
     }
-    
-  # shiny::observeEvent(seasonalTotals(), {
-  #   shinyjs::showElement("pageBottomText")
-  # })
   })
   
 
   # Reactives -----
   
-  barChart <- shiny::eventReactive(seasonalTotals(), {
+  barChart <- shiny::eventReactive(totalEvapotranspiration(), {
     fxn_barChart(
-      inData = seasonalTotals(),
+      inData = totalEvapotranspiration()[[2]],
       azmetStation = input$azmetStation
     )
   })
   
-  barChartCaption <- shiny::eventReactive(seasonalTotals(), {
+  barChartCaption <- shiny::eventReactive(totalEvapotranspiration(), {
     fxn_barChartCaption(
       azmetStation = input$azmetStation,
-      inData = seasonalTotals(),
+      inData = totalEvapotranspiration()[[2]],
       startDate = input$startDate,
       endDate = input$endDate,
       etEquation = input$etEquation
     )
   })
   
-  navsetCardTabSummary <- shiny::eventReactive(seasonalTotals(), {
+  navsetCardTabSummary <- shiny::eventReactive(totalEvapotranspiration(), {
     fxn_navsetCardTabSummary(
       azmetStation = input$azmetStation,
-      inData = seasonalTotals(),
+      inData = totalEvapotranspiration()[[2]],
       startDate = input$startDate,
       endDate = input$endDate
     )
   })
   
-  navsetCardTabTitle <- shiny::eventReactive(list(navsetCardTabTitleIcon(), seasonalTotals()), {
+  navsetCardTabTitle <- shiny::eventReactive(list(navsetCardTabTitleIcon(), totalEvapotranspiration()), {
     fxn_navsetCardTabTitle(
       azmetStation = input$azmetStation,
       navsetCardTabTitleIcon = navsetCardTabTitleIcon()
@@ -153,7 +149,7 @@ server <- function(input, output, session) {
     )
   })
   
-  pageBottomText <- shiny::eventReactive(seasonalTotals(), {
+  pageBottomText <- shiny::eventReactive(totalEvapotranspiration(), {
     fxn_pageBottomText(
       startDate = input$startDate, 
       endDate = input$endDate,
@@ -161,7 +157,7 @@ server <- function(input, output, session) {
     )
   })
   
-  seasonalTotals <- shiny::eventReactive(input$calculateTotal, {
+  totalEvapotranspiration <- shiny::eventReactive(input$calculateTotal, {
     shiny::validate(
       shiny::need(
         expr = input$startDate <= input$endDate,
@@ -183,7 +179,7 @@ server <- function(input, output, session) {
       add = TRUE
     )
     
-    fxn_seasonalTotals( # calls `fxn_dailyData.R` and `fxn_etTotal.R`
+    fxn_totalEvapotranspiration( # calls `fxn_azDaily.R`
       azmetStation = input$azmetStation,
       startDate = input$startDate,
       endDate = input$endDate,
@@ -222,6 +218,10 @@ server <- function(input, output, session) {
   output$pageBottomText <- shiny::renderUI({
     shiny::req(showPageBottomText())
     pageBottomText()
+  })
+  
+  output$totalEvapotranspiration <- shiny::renderTable({
+    totalEvapotranspiration()[[1]]
   })
 }
 
