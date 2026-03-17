@@ -9,6 +9,7 @@ library(ggplot2)
 library(htmltools)
 library(lubridate)
 library(plotly)
+library(reactable)
 library(shiny)
 library(shinyjs)
 library(vroom)
@@ -117,10 +118,10 @@ dailyVarsID <-
     "date_doy", 
     "date_year", 
     "datetime", 
-    "meta_needs_review", 
-    "meta_station_id", 
-    "meta_station_name", 
-    "meta_version"
+    # "meta_needs_review", 
+    # "meta_station_id", 
+    "meta_station_name"#, 
+    # "meta_version"
   )
 
 # Measured (or dervied at station datalogger) variables

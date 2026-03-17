@@ -220,8 +220,13 @@ server <- function(input, output, session) {
     pageBottomText()
   })
   
-  output$totalEvapotranspiration <- shiny::renderTable({
-    totalEvapotranspiration()[[1]]
+  output$navsetCardTable <- reactable::renderReactable({
+    fxn_navsetCardTable(
+      inData = totalEvapotranspiration()[[1]],
+      startDate = input$startDate,
+      endDate = input$endDate,
+      etEquation = input$etEquation
+    )
   })
 }
 

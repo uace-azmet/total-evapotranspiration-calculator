@@ -280,6 +280,10 @@
   padding-bottom: 1rem !important;
 }
 
+.navsetCardTable .rt-tr-group .rt-tr:hover {
+  background-color: #e2e9eb !important;
+}
+
 .next:hover {
   background-color: rgb(226, 233, 235) !important;
 }

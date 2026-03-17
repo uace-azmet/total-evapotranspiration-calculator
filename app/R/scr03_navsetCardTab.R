@@ -21,8 +21,7 @@ navsetCardTab <- bslib::navset_card_tab(
     title = "Table",
     value = "table",
     
-    shiny::tableOutput("totalEvapotranspiration"),
-    #   shiny::htmlOutput(outputId = "timeseriesGraphFooter")
+    reactable::reactableOutput(outputId = "navsetCardTable")
   ),
   
   bslib::nav_panel(
