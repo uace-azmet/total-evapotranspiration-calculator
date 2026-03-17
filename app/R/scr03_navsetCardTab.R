@@ -13,8 +13,8 @@ navsetCardTab <- bslib::navset_card_tab(
     title = "Bar Chart",
     value = "barChart",
     
-    plotly::plotlyOutput(outputId = "barChart"),
-    shiny::htmlOutput(outputId = "barChartCaption")
+    plotly::plotlyOutput(outputId = "navsetCardBarChart"),
+    shiny::htmlOutput(outputId = "navsetCardBarChartCaption")
   ),
   
   bslib::nav_panel(

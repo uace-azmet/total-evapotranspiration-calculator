@@ -205,7 +205,7 @@ fxn_navsetCardTable <- function(inData, startDate, endDate, etEquation) {
       #wrap = TRUE,
       #showSortIcon = TRUE,
       #showSortable = FALSE,
-      class = "navsetCardTable",
+      class = "navset-card-table",
       #style = NULL,
       #rowClass = NULL,
       #rowStyle = NULL,

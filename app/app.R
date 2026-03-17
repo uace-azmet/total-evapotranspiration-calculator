@@ -110,17 +110,26 @@ server <- function(input, output, session) {
 
   # Reactives -----
   
-  barChart <- shiny::eventReactive(totalEvapotranspiration(), {
-    fxn_barChart(
+  navsetCardBarChart <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardBarChart(
       inData = totalEvapotranspiration()[[2]],
       azmetStation = input$azmetStation
     )
   })
   
-  barChartCaption <- shiny::eventReactive(totalEvapotranspiration(), {
-    fxn_barChartCaption(
+  navsetCardBarChartCaption <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardBarChartCaption(
       azmetStation = input$azmetStation,
       inData = totalEvapotranspiration()[[2]],
+      startDate = input$startDate,
+      endDate = input$endDate,
+      etEquation = input$etEquation
+    )
+  })
+  
+  navsetCardTable <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTable(
+      inData = totalEvapotranspiration()[[1]],
       startDate = input$startDate,
       endDate = input$endDate,
       etEquation = input$etEquation
@@ -190,12 +199,12 @@ server <- function(input, output, session) {
   
   # Outputs -----
   
-  output$barChart <- plotly::renderPlotly({
-    barChart()
+  output$navsetCardBarChart <- plotly::renderPlotly({
+    navsetCardBarChart()
   })
   
-  output$barChartCaption <- shiny::renderUI({
-    barChartCaption()
+  output$navsetCardBarChartCaption <- shiny::renderUI({
+    navsetCardBarChartCaption()
   })
   
   output$navsetCardTab <- shiny::renderUI({
@@ -221,12 +230,7 @@ server <- function(input, output, session) {
   })
   
   output$navsetCardTable <- reactable::renderReactable({
-    fxn_navsetCardTable(
-      inData = totalEvapotranspiration()[[1]],
-      startDate = input$startDate,
-      endDate = input$endDate,
-      etEquation = input$etEquation
-    )
+    navsetCardTable()
   })
 }
 

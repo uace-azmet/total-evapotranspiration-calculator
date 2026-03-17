@@ -14,13 +14,6 @@
     content: attr(data-title);
 }
 
-.bar-chart-caption {
-  color: #606060; 
-  font-size: 0.85rem;
-  font-style: normal;
-  padding-top: 8px;
-}
-
 .bolder-icon {
   stroke-width: 0.5;
   stroke: currentColor; /* Inherits the 'color' property of the parent */
@@ -267,6 +260,13 @@
   text-shadow: none !important;
 }
 
+.navset-card-caption {
+  color: #606060; 
+  font-size: 0.85rem;
+  font-style: normal;
+  padding-top: 8px;
+}
+
 .navset-card-tab-summary {
   color: #191919;
   font-weight: plain;
@@ -280,7 +280,7 @@
   padding-bottom: 1rem !important;
 }
 
-.navsetCardTable .rt-tr-group .rt-tr:hover {
+.navset-card-table .rt-tr-group .rt-tr:hover {
   background-color: #e2e9eb !important;
 }
 

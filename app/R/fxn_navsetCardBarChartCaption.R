@@ -1,14 +1,14 @@
-#' `fxn_barChartCaption.R` - Build caption for bar chart based on user input
+#' `fxn_navsetCardBarChartCaption.R` - Build caption for bar chart based on user input
 #' 
 #' @param azmetStation AZMet station selection by user
 #' @param inData - data table of seasonal total evapotranspiration by year
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
 #' @param etEquation - ET equation selection by user
-#' @return `barChartCaption` Caption for bar chart based on selected station
+#' @return `navsetCardBarChartCaption` Caption for bar chart based on selected station
 
 
-fxn_barChartCaption <- function(azmetStation, inData, startDate, endDate, etEquation) {
+fxn_navsetCardBarChartCaption <- function(azmetStation, inData, startDate, endDate, etEquation) {
   
   azmetStationStartDate <- 
     dplyr::filter(
@@ -52,7 +52,7 @@ fxn_barChartCaption <- function(azmetStation, inData, startDate, endDate, etEqua
   
   # Generate figure footer based on presence/absence of non-operational dates
   if (azmetStation == "Yuma N.Gila" & nonOperational == 1) {
-    barChartCaption <- 
+    navsetCardBarChartCaption <- 
       htmltools::p(
         htmltools::HTML(
           paste(
@@ -62,15 +62,15 @@ fxn_barChartCaption <- function(azmetStation, inData, startDate, endDate, etEqua
           )
         ),
         
-        class = "bar-chart-caption"
+        class = "navset-card-caption"
       )
   } else {
-    barChartCaption <- 
+    navsetCardBarChartCaption <- 
       htmltools::p(
         htmltools::HTML(standardText), 
-        class = "bar-chart-caption"
+        class = "navset-card-caption"
       )
   }
   
-  return(barChartCaption)
+  return(navsetCardBarChartCaption)
 }
