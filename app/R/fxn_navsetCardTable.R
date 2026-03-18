@@ -30,9 +30,9 @@ fxn_navsetCardTable <- function(inData, startDate, endDate, etEquation) {
           )
         )
       ) %>% 
-      dplyr::mutate(
-        et_total = eto_azmet_in,
-        et_total_acc = eto_azmet_in_acc
+      dplyr::rename(
+        et_total_in = eto_azmet_in,
+        et_total_in_acc = eto_azmet_in_acc
       )
   } else if (etEquation == "Penman-Monteith") {
     inData <- inData %>%

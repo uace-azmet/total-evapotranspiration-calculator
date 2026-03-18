@@ -136,6 +136,12 @@ server <- function(input, output, session) {
     )
   })
   
+  navsetCardTableCaption <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTableCaption(
+      etEquation = input$etEquation
+    )
+  })
+  
   navsetCardTabSummary <- shiny::eventReactive(totalEvapotranspiration(), {
     fxn_navsetCardTabSummary(
       azmetStation = input$azmetStation,
@@ -212,6 +218,14 @@ server <- function(input, output, session) {
     navsetCardTab # `scr##_navsetCardTab.R`
   })
   
+  output$navsetCardTable <- reactable::renderReactable({
+    navsetCardTable()
+  })
+  
+  output$navsetCardTableCaption <- shiny::renderUI({
+    navsetCardTableCaption()
+  })
+  
   output$navsetCardTabSummary <- shiny::renderUI({
     navsetCardTabSummary()
   })
@@ -227,10 +241,6 @@ server <- function(input, output, session) {
   output$pageBottomText <- shiny::renderUI({
     shiny::req(showPageBottomText())
     pageBottomText()
-  })
-  
-  output$navsetCardTable <- reactable::renderReactable({
-    navsetCardTable()
   })
 }
 

@@ -1,0 +1,20 @@
+#' `fxn_navsetCardTableCaption.R` - Build caption for bar chart based on user input
+#' 
+#' @param etEquation - ET equation selection by user
+#' @return `navsetCardTableCaption` Caption for bar chart based on selected station
+
+
+fxn_navsetCardTableCaption <- function(etEquation) {
+  navsetCardTableCaption <- 
+    htmltools::p(
+      htmltools::HTML(
+        paste0(
+          "Variable key: <strong>Day<sub>period</sub></strong> day number of the period of interest; <strong>ET</strong> daily total evaporation in inches as estimated by the ", etEquation, " equation; <strong>ET<sub>cumulative</sub></strong> accumulation of daily total evaporation in inches during the period of interest as estimated by the ", etEquation, " equation; <strong>P</strong> daily total precipitation in inches; <strong>P<sub>cumulative</sub></strong> accumulation of daily total precipitation in inches during the period of interest"
+        )
+      ),
+      
+      class = "navset-card-caption"
+    )
+  
+  return(navsetCardTableCaption)
+}
