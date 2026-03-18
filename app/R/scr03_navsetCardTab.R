@@ -27,9 +27,9 @@ navsetCardTab <- bslib::navset_card_tab(
   
   bslib::nav_panel(
     title = "Time Series",
-    value = "timeSeries"#,
+    value = "timeSeries",
     
-    # shiny::htmlOutput(outputId = "validationText")
+    shiny::htmlOutput(outputId = "navsetCardTimeSeriesCaption")
   ),
   
   bslib::nav_item(

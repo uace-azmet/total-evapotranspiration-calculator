@@ -165,6 +165,10 @@ server <- function(input, output, session) {
     )
   })
   
+  navsetCardTimeSeriesCaption <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTimeSeriesCaption()
+  })
+  
   pageBottomText <- shiny::eventReactive(totalEvapotranspiration(), {
     fxn_pageBottomText(
       startDate = input$startDate, 
@@ -255,6 +259,10 @@ server <- function(input, output, session) {
   
   output$navsetCardTabTooltip <- shiny::renderUI({
     navsetCardTabTooltipText()
+  })
+  
+  output$navsetCardTimeSeriesCaption <- shiny::renderUI({
+    navsetCardTimeSeriesCaption()
   })
   
   output$pageBottomText <- shiny::renderUI({
