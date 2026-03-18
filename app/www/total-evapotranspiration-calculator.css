@@ -413,31 +413,5 @@
   /* margin-bottom: 48px;
   margin-left: 0px; */
   margin-right: 1.5rem;
-  margin-top: 0rem;
-}
-
-/* #downloadTSV {
-  margin-bottom: 48px; 
-  margin-left: 0px;
-  margin-top: 0rem;
-}
-
-/* #downloadCSV:active {
-  background-color: #001C48; 
-  color: #fff;
-}
-
-#downloadCSV:hover {
-  background-color: #001C48; 
-  color: #fff;
-}
-
-#downloadTSV:active {
-  background-color: #001C48; 
-  color: #fff;
-}
-
-#downloadTSV:hover {
-  background-color: #001C48; 
-  color: #fff;
+  margin-top: 4px;
 }
