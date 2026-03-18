@@ -27,12 +27,12 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
         datetime >= startDate & datetime <= endDate
       ) %>% 
       dplyr::mutate(
-        precip_total_mm_acc = cumsum(precip_total_mm),
-        precip_total_in_acc = cumsum(precip_total_in),
-        eto_azmet_acc = cumsum(eto_azmet),
-        eto_azmet_in_acc = cumsum(eto_azmet_in),
-        eto_pen_mon_acc = cumsum(eto_pen_mon),
-        eto_pen_mon_in_acc = cumsum(eto_pen_mon_in)
+        precip_total_mm_acc = round(cumsum(precip_total_mm), digits = 2),
+        precip_total_in_acc = round(cumsum(precip_total_in), digits = 2),
+        eto_azmet_acc = round(cumsum(eto_azmet), digits = 2),
+        eto_azmet_in_acc = round(cumsum(eto_azmet_in), digits = 2),
+        eto_pen_mon_acc = round(cumsum(eto_pen_mon), digits = 2),
+        eto_pen_mon_in_acc = round(cumsum(eto_pen_mon_in), digits = 2)
       )
     
     singleYearTotal <-

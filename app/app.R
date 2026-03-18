@@ -22,6 +22,7 @@ ui <- htmltools::htmlTemplate(
         class = "border-0 rounded-0 shadow-none"
       ),
     
+    shiny::htmlOutput(outputId = "downloadButtonsDiv"), # Common, regardless of card tab
     shiny::htmlOutput(outputId = "pageBottomText") # Common, regardless of card tab
   )
 )
@@ -30,16 +31,16 @@ ui <- htmltools::htmlTemplate(
 # Server --------------------
 
 server <- function(input, output, session) {
-  # shinyjs::useShinyjs(html = TRUE)
-  # shinyjs::hideElement("pageBottomText")
+  shinyjs::useShinyjs(html = TRUE)
+  shinyjs::hideElement("downloadButtonsDiv")
   
   
   # Observables -----
   
   shiny::observeEvent(totalEvapotranspiration(), {
+    shinyjs::showElement("downloadButtonsDiv")
     showNavsetCardTab(TRUE)
     showPageBottomText(TRUE)
-    # shinyjs::showElement("pageBottomText")
   })
   
   # To update available dates based on selected station
@@ -204,6 +205,24 @@ server <- function(input, output, session) {
   
   
   # Outputs -----
+  
+  output$downloadButtonsDiv <- shiny::renderUI({
+    fxn_downloadButtonsDiv()
+  })
+  
+  output$downloadCSV <- shiny::downloadHandler(
+    filename = function() {"AZMet-Total-Evaporation-Calculator.csv"},
+    content = function(file) {
+      vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = ",")
+    }
+  )
+  
+  output$downloadTSV <- shiny::downloadHandler(
+    filename = function() {"AZMet-Total-Evaporation-Calculator.tsv"},
+    content = function(file) {
+      vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = "\t")
+    }
+  )
   
   output$navsetCardBarChart <- plotly::renderPlotly({
     navsetCardBarChart()
