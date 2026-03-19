@@ -32,7 +32,13 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
         eto_azmet_acc = round(cumsum(eto_azmet), digits = 2),
         eto_azmet_in_acc = round(cumsum(eto_azmet_in), digits = 2),
         eto_pen_mon_acc = round(cumsum(eto_pen_mon), digits = 2),
-        eto_pen_mon_in_acc = round(cumsum(eto_pen_mon_in), digits = 2)
+        eto_pen_mon_in_acc = round(cumsum(eto_pen_mon_in), digits = 2),
+        date_year_label = dplyr::if_else(
+          condition = lubridate::year(startDate) == lubridate::year(endDate),
+          true = as.character(lubridate::year(startDate)),
+          false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
+        ),
+        day_of_period = dplyr::row_number()
       )
     
     singleYearTotal <-

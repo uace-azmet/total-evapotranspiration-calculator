@@ -12,8 +12,7 @@ fxn_navsetCardTable <- function(inData, startDate, endDate, etEquation) {
   # Inputs -----
   
   inData <- inData %>% 
-    dplyr::filter(datetime >= startDate & datetime <= endDate) %>% 
-    dplyr::mutate(period_day = dplyr::row_number())
+    dplyr::filter(datetime >= startDate & datetime <= endDate)
   
   if (etEquation == "Original AZMet") {
     inData <- inData %>% 
@@ -22,7 +21,7 @@ fxn_navsetCardTable <- function(inData, startDate, endDate, etEquation) {
           c(
             "meta_station_name",
             "datetime",
-            "period_day",
+            "day_of_period",
             "eto_azmet_in", 
             "eto_azmet_in_acc", 
             "precip_total_in", 
@@ -41,7 +40,7 @@ fxn_navsetCardTable <- function(inData, startDate, endDate, etEquation) {
           c(
             "meta_station_name",
             "datetime",
-            "period_day",
+            "day_of_period",
             "eto_pen_mon_in", 
             "eto_pen_mon_in_acc", 
             "precip_total_in", 
@@ -110,7 +109,7 @@ fxn_navsetCardTable <- function(inData, startDate, endDate, etEquation) {
           na = "NA",
           rowHeader = TRUE
         ),
-        period_day = reactable::colDef(
+        day_of_period = reactable::colDef(
           name = htmltools::HTML("Day<sub>period</sub><br>"),
           html = TRUE,
           # minWidth = 100,

@@ -165,8 +165,23 @@ server <- function(input, output, session) {
     )
   })
   
+  navsetCardTimeSeries <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTimeSeries(
+      inData = totalEvapotranspiration()[[1]],
+      startDate = input$startDate,
+      endDate = input$endDate,
+      etEquation = input$etEquation
+    )
+  })
+  
   navsetCardTimeSeriesCaption <- shiny::eventReactive(totalEvapotranspiration(), {
-    fxn_navsetCardTimeSeriesCaption()
+    fxn_navsetCardTimeSeriesCaption(
+      azmetStation = input$azmetStation,
+      inData = totalEvapotranspiration()[[1]],
+      startDate = input$startDate,
+      endDate = input$endDate,
+      etEquation = input$etEquation
+    )
   })
   
   pageBottomText <- shiny::eventReactive(totalEvapotranspiration(), {
@@ -259,6 +274,10 @@ server <- function(input, output, session) {
   
   output$navsetCardTabTooltip <- shiny::renderUI({
     navsetCardTabTooltipText()
+  })
+  
+  output$navsetCardTimeSeries <- plotly::renderPlotly({
+    navsetCardTimeSeries()
   })
   
   output$navsetCardTimeSeriesCaption <- shiny::renderUI({

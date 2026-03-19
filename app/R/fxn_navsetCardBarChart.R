@@ -155,7 +155,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "Year"
+            text = "<b>Year</b>"
           ),
           zeroline = FALSE
         ),
@@ -165,7 +165,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "Inches"
+            text = "<b>ET<sub>cumulative</sub> (in)</b>"
           ),
           zeroline = TRUE,
           zerolinecolor = "#c9c9c9"
@@ -292,7 +292,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "Year"
+            text = "<b>Year</b>"
           ),
           zeroline = FALSE
         ),
@@ -302,7 +302,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "Inches"
+            text = "<b>ET<sub>cumulative</sub> (in)</b>"
           ),
           zeroline = TRUE,
           zerolinecolor = "#c9c9c9"
