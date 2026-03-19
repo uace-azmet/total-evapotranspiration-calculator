@@ -71,7 +71,8 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
             eto_pen_mon_in_acc = NA_real_
           )
         
-        singleYearTotal$etTotal <- 0.00
+        # singleYearTotal$etTotal <- 0.00
+        singleYearTotal$etTotal <- NA_real_
         singleYearTotal$etTotalLabel <- "NA"
       }
     }

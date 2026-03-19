@@ -20,7 +20,7 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
   if (length(unique(inData$date_year_label)) == 1) {
     standardText <- 
       paste0(
-        "Cumulative evapotranspiration is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+        "Cumulative evapotranspiration (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   } else {
     standardText <- 

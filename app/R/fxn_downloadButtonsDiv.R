@@ -21,7 +21,7 @@ fxn_downloadButtonsDiv <- function() {
       htmltools::HTML("&nbsp;&nbsp;"),
       bslib::tooltip(
         bsicons::bs_icon("info-circle"),
-        "Click or tap to download a file of the input data for the above with either comma- or tab-separated values.",
+        "Click or tap to download a file of the input data for the above information with either comma- or tab-separated values.",
         id = "downloadInfo",
         placement = "right"
       ),
