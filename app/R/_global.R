@@ -1,5 +1,6 @@
 # Libraries --------------------
 
+
 library(azmetr)
 library(bsicons)
 library(bslib)
@@ -8,6 +9,7 @@ library(ggplot2)
 library(htmltools)
 library(lubridate)
 library(plotly)
+library(reactable)
 library(shiny)
 library(shinyjs)
 library(vroom)
@@ -15,14 +17,18 @@ library(vroom)
 
 # Files --------------------
 
+
 # Functions. Loaded automatically at app start if in `R` folder
 #source("./R/fxn_functionName.R", local = TRUE)
 
 # Scripts. Loaded automatically at app start if in `R` folder
 #source("./R/scr_scriptName.R", local = TRUE)
 
+shiny::addResourcePath("shinyjs", system.file("srcjs", package = "shinyjs"))
+
 
 # Variables --------------------
+
 
 azmetStationMetadata <- azmetr::station_info |>
   dplyr::mutate(end_date = NA) |> # Placeholder until inactive stations are in API and `azmetr`
@@ -41,6 +47,29 @@ azmetStationMetadata <- azmetr::station_info |>
     )
   ) |>
   dplyr::filter(!meta_station_name %in% c("Test"))
+
+activeStations <-
+  dplyr::filter(
+    azmetStationMetadata,
+    status == "active"
+  )
+
+etEquations <- c("Original AZMet", "Penman-Monteith")
+
+initialStation <-
+  dplyr::filter(
+    activeStations,
+    meta_station_name == azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
+  ) %>% 
+  dplyr::pull(meta_station_name)
+
+navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
+
+showNavsetCardTab <- reactiveVal(FALSE)
+showPageBottomText <- reactiveVal(FALSE)
+
+
+# Daily Data --
 
 # Derived (after data retrieved from station) variables
 dailyVarsDerived <- 
@@ -92,10 +121,10 @@ dailyVarsID <-
     "date_doy", 
     "date_year", 
     "datetime", 
-    "meta_needs_review", 
-    "meta_station_id", 
-    "meta_station_name", 
-    "meta_version"
+    # "meta_needs_review", 
+    # "meta_station_id", 
+    "meta_station_name"#, 
+    # "meta_version"
   )
 
 # Measured (or dervied at station datalogger) variables
@@ -133,21 +162,12 @@ dailyVarsMeasured <-
     # "wind_vector_magnitude"
   )
 
-etEquations <- c("Original AZMet", "Penman-Monteith")
 
-activeStations <-
-  dplyr::filter(
-    azmetStationMetadata,
-    status == "active"
-  )
+# Datepicker --
 
-initialStation <-
-  dplyr::filter(
-    activeStations,
-    meta_station_name == azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
-  )$meta_station_name
-
-initialStationStartDate <- dplyr::filter(activeStations, meta_station_name == initialStation)$start_date
+initialStationStartDate <- 
+  dplyr::filter(activeStations, meta_station_name == initialStation) %>% 
+  dplyr::pull(start_date)
 
 if (initialStationStartDate > Sys.Date() - lubridate::years(1)) {
   initialStartDateMinimum <- initialStationStartDate

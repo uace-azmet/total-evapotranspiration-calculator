@@ -1,7 +1,7 @@
 sidebar <- bslib::sidebar(
   width = 300,
   position = "left",
-  open = list(desktop = "always", mobile = "always-above"),
+  open = list(desktop = "open", mobile = "always-above"),
   id = "sidebar",
   title = NULL,
   bg = "#FFFFFF",
@@ -12,10 +12,9 @@ sidebar <- bslib::sidebar(
   padding = NULL,
   
   htmltools::p(
-    bsicons::bs_icon("sliders"), 
+    bsicons::bs_icon("sliders", class = "bolder-icon"), 
     htmltools::HTML("&nbsp;"), 
-    "DATA OPTIONS",
-    htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
+    htmltools::HTML("<strong>DATA OPTIONS</strong>&nbsp;"),
     bslib::tooltip(
       bsicons::bs_icon("info-circle"),
       "Select an AZMet station, evapotranspiration equation, and dates for the start and end of the period of interest. Then, click or tap 'CALCULATE TOTAL'.",

@@ -1,6 +1,6 @@
-#' `fxn_etTotal` - calculates total evapotranspiration for a single season of an individual year
+#' `fxn_etTotal` - Calculates total evapotranspiration for an individual year
 #' 
-#' @param inData - returned output from `fxn_dailyData.R`
+#' @param inData - Derived data table of daily values from `fxn_totalEvapotranspiration.R`
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest

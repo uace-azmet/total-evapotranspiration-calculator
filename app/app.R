@@ -3,47 +3,53 @@
 
 # UI --------------------
 
+
 ui <- htmltools::htmlTemplate(
   
   filename = "azmet-shiny-template.html",
   
-  pageFluid = bslib::page_fluid(
+  pageTotalEvapotranspirationCalculator = bslib::page(
     title = NULL,
     theme = theme, # `scr##_theme.R`
     
     bslib::layout_sidebar(
       sidebar = sidebar, # `scr##_sidebar.R`
-      
-      shiny::htmlOutput(outputId = "figureTitle"),
-      shiny::htmlOutput(outputId = "figureSummary"),
-      plotly::plotlyOutput(outputId = "figure"),
-      shiny::htmlOutput(outputId = "figureFooter")
+      shiny::htmlOutput(outputId = "navsetCardTabTitle"),
+      shiny::htmlOutput(outputId = "navsetCardTabSummary"),
+      shiny::uiOutput(outputId = "navsetCardTab")
     ) |>
       htmltools::tagAppendAttributes(
         #https://getbootstrap.com/docs/5.0/utilities/api/
         class = "border-0 rounded-0 shadow-none"
       ),
     
-    shiny::htmlOutput(outputId = "pageBottomText")
+    shiny::htmlOutput(outputId = "downloadButtonsDiv"), # Common, regardless of card tab
+    shiny::htmlOutput(outputId = "pageBottomText") # Common, regardless of card tab
   )
 )
 
 
 # Server --------------------
 
+
 server <- function(input, output, session) {
-  # shinyjs::useShinyjs(html = TRUE)
-  # shinyjs::hideElement("pageBottomText")
+  shinyjs::useShinyjs(html = TRUE)
+  shinyjs::hideElement(id = "downloadButtonsDiv")
   
   
   # Observables -----
   
+  shiny::observeEvent(totalEvapotranspiration(), {
+    shinyjs::showElement(id = "downloadButtonsDiv")
+    showNavsetCardTab(TRUE)
+    showPageBottomText(TRUE)
+  })
+  
+  # To update available dates based on selected station
   shiny::observeEvent(input$azmetStation, {
     stationStartDate <-
-      dplyr::filter(
-        azmetStationMetadata,
-        meta_station_name == input$azmetStation
-      )$start_date
+      dplyr::filter(azmetStationMetadata, meta_station_name == input$azmetStation) %>% 
+      dplyr::pull(start_date)
     
     if (stationStartDate > Sys.Date() - lubridate::years(1)) {
       stationStartDateMinimum <- stationStartDate
@@ -88,45 +94,97 @@ server <- function(input, output, session) {
     }
   })
   
-  # shiny::observeEvent(seasonalTotals(), {
-  #   shinyjs::showElement("pageBottomText")
-  # })
+  # To update icon in navsetCardTab title
+  shiny::observeEvent(input$navsetCardTab, {
+    if (input$navsetCardTab == "barChart") {
+      navsetCardTabTitleIcon("bar-chart-fill")
+      # print("bar-chart-fill")
+    } else if (input$navsetCardTab == "table") {
+      navsetCardTabTitleIcon("table")
+      # print("table")
+    } else if (input$navsetCardTab == "timeSeries") {
+      navsetCardTabTitleIcon("graph-up")
+      # print("graph-up")
+    }
+  })
   
 
   # Reactives -----
   
-  figure <- shiny::eventReactive(seasonalTotals(), {
-    fxn_figure(
-      inData = seasonalTotals(),
+  navsetCardBarChart <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardBarChart(
+      inData = totalEvapotranspiration()[[2]],
       azmetStation = input$azmetStation
     )
   })
   
-  figureFooter <- shiny::eventReactive(seasonalTotals(), {
-    fxn_figureFooter(
+  navsetCardBarChartCaption <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardBarChartCaption(
       azmetStation = input$azmetStation,
-      inData = seasonalTotals(),
+      inData = totalEvapotranspiration()[[2]],
+      startDate = input$startDate,
+      endDate = input$endDate,
+      etEquation = input$etEquation
+    )
+  })
+  
+  navsetCardTable <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTable(
+      inData = totalEvapotranspiration()[[1]],
+      startDate = input$startDate,
+      endDate = input$endDate,
+      etEquation = input$etEquation
+    )
+  })
+  
+  navsetCardTableCaption <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTableCaption(
+      etEquation = input$etEquation
+    )
+  })
+  
+  navsetCardTabSummary <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTabSummary(
+      azmetStation = input$azmetStation,
+      inData = totalEvapotranspiration()[[2]],
       startDate = input$startDate,
       endDate = input$endDate
     )
   })
   
-  figureSummary <- shiny::eventReactive(seasonalTotals(), {
-    fxn_figureSummary(
+  navsetCardTabTitle <- shiny::eventReactive(list(navsetCardTabTitleIcon(), totalEvapotranspiration()), {
+    fxn_navsetCardTabTitle(
       azmetStation = input$azmetStation,
-      inData = seasonalTotals(),
+      navsetCardTabTitleIcon = navsetCardTabTitleIcon()
+    )
+  })
+  
+  navsetCardTabTooltipText <- shiny::eventReactive(input$navsetCardTab, {
+    fxn_navsetCardTabTooltipText(
+      navsetCardTab = input$navsetCardTab
+    )
+  })
+  
+  navsetCardTimeSeries <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTimeSeries(
+      inData = totalEvapotranspiration()[[1]],
       startDate = input$startDate,
-      endDate = input$endDate
+      endDate = input$endDate,
+      etEquation = input$etEquation
     )
   })
   
-  figureTitle <- shiny::eventReactive(seasonalTotals(), {
-    fxn_figureTitle(
-      azmetStation = input$azmetStation
+  navsetCardTimeSeriesCaption <- shiny::eventReactive(totalEvapotranspiration(), {
+    fxn_navsetCardTimeSeriesCaption(
+      azmetStation = input$azmetStation,
+      inData = totalEvapotranspiration()[[1]],
+      startDate = input$startDate,
+      endDate = input$endDate,
+      etEquation = input$etEquation
     )
   })
   
-  pageBottomText <- shiny::eventReactive(seasonalTotals(), {
+  pageBottomText <- shiny::eventReactive(totalEvapotranspiration(), {
     fxn_pageBottomText(
       startDate = input$startDate, 
       endDate = input$endDate,
@@ -134,7 +192,7 @@ server <- function(input, output, session) {
     )
   })
   
-  seasonalTotals <- shiny::eventReactive(input$calculateTotal, {
+  totalEvapotranspiration <- shiny::eventReactive(input$calculateTotal, {
     shiny::validate(
       shiny::need(
         expr = input$startDate <= input$endDate,
@@ -156,7 +214,7 @@ server <- function(input, output, session) {
       add = TRUE
     )
     
-    fxn_seasonalTotals( # calls `fxn_dailyData.R` and `fxn_etTotal.R`
+    fxn_totalEvapotranspiration( # calls `fxn_azDaily.R`, `fxn_etTotal.R`
       azmetStation = input$azmetStation,
       startDate = input$startDate,
       endDate = input$endDate,
@@ -167,27 +225,73 @@ server <- function(input, output, session) {
   
   # Outputs -----
   
-  output$figure <- plotly::renderPlotly({
-    figure()
+  output$downloadButtonsDiv <- shiny::renderUI({
+    fxn_downloadButtonsDiv()
   })
   
-  output$figureFooter <- shiny::renderUI({
-    figureFooter()
+  output$downloadCSV <- shiny::downloadHandler(
+    filename = function() {"AZMet-total-evaporation-calculator.csv"},
+    content = function(file) {
+      vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = ",")
+    }
+  )
+  
+  output$downloadTSV <- shiny::downloadHandler(
+    filename = function() {"AZMet-total-evaporation-calculator.tsv"},
+    content = function(file) {
+      vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = "\t")
+    }
+  )
+  
+  output$navsetCardBarChart <- plotly::renderPlotly({
+    navsetCardBarChart()
   })
   
-  output$figureSummary <- shiny::renderUI({
-    figureSummary()
+  output$navsetCardBarChartCaption <- shiny::renderUI({
+    navsetCardBarChartCaption()
   })
   
-  output$figureTitle <- shiny::renderUI({
-    figureTitle()
+  output$navsetCardTab <- shiny::renderUI({
+    shiny::req(showNavsetCardTab())
+    navsetCardTab # `scr##_navsetCardTab.R`
+  })
+  
+  output$navsetCardTable <- reactable::renderReactable({
+    navsetCardTable()
+  })
+  
+  output$navsetCardTableCaption <- shiny::renderUI({
+    navsetCardTableCaption()
+  })
+  
+  output$navsetCardTabSummary <- shiny::renderUI({
+    navsetCardTabSummary()
+  })
+  
+  output$navsetCardTabTitle <- shiny::renderUI({
+    navsetCardTabTitle()
+  })
+  
+  output$navsetCardTabTooltip <- shiny::renderUI({
+    navsetCardTabTooltipText()
+  })
+  
+  output$navsetCardTimeSeries <- plotly::renderPlotly({
+    navsetCardTimeSeries()
+  })
+  
+  output$navsetCardTimeSeriesCaption <- shiny::renderUI({
+    navsetCardTimeSeriesCaption()
   })
   
   output$pageBottomText <- shiny::renderUI({
+    shiny::req(showPageBottomText())
     pageBottomText()
   })
 }
 
+
 # Run --------------------
+
 
 shiny::shinyApp(ui = ui, server = server)

@@ -1,8 +1,8 @@
-#' `fxn_figure` generates bar chart of total evapotranspiration of current and recent years
+#' `fxn_navsetCardBarChart` Generates bar chart of total evapotranspiration of current and recent years
 #' 
-#' @param inData - data table of seasonal total evapotranspiration values by year
-#' @param azmetStation - user-specified AZMet station
-#' @return `figure` - plotly figure
+#' @param inData - Data table [[2]] from `fxn_totalEvapotranspiration.R`
+#' @param azmetStation - User-specified AZMet station
+#' @return `navsetCardBarChart` - plotly bar chart
 
 # https://plotly-r.com/ 
 # https://plotly.com/r/reference/ 
@@ -11,9 +11,9 @@
 # https://www.color-hex.com/color-palette/1041718
 
 
-fxn_figure <- function(inData, azmetStation) {
+fxn_navsetCardBarChart <- function(inData, azmetStation) {
   
-  # Inputs -----
+  # Inputs --
   
   averageTotal <- mean(inData$etTotal, na.rm = TRUE)
   
@@ -31,11 +31,10 @@ fxn_figure <- function(inData, azmetStation) {
   tickvals <- inData$endDateYear
   
   
-  # Figure -----
+  # Figure --
   
-  # For stations with only one year of data
-  if (nrow(inData) == 1) {
-    figure <- 
+  if (nrow(inData) == 1) { # For stations with only one year of data
+    navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
         x = ~endDateYear,
@@ -155,7 +154,7 @@ fxn_figure <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "Year"
+            text = "<b>Year</b>"
           ),
           zeroline = FALSE
         ),
@@ -165,14 +164,14 @@ fxn_figure <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "Inches"
+            text = "<b>ET<sub>cumulative</sub> (in)</b>"
           ),
           zeroline = TRUE,
           zerolinecolor = "#c9c9c9"
         )
       )
-  } else {
-    figure <- 
+  } else { # For stations with more than one year of data
+    navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
         x = ~endDateYear,
@@ -292,7 +291,7 @@ fxn_figure <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "Year"
+            text = "<b>Year</b>"
           ),
           zeroline = FALSE
         ),
@@ -302,7 +301,7 @@ fxn_figure <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "Inches"
+            text = "<b>ET<sub>cumulative</sub> (in)</b>"
           ),
           zeroline = TRUE,
           zerolinecolor = "#c9c9c9"
@@ -310,5 +309,5 @@ fxn_figure <- function(inData, azmetStation) {
       )
   }
   
-  return(figure)
+  return(navsetCardBarChart)
 }
