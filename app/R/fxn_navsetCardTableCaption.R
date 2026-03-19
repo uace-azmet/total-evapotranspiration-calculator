@@ -1,7 +1,7 @@
-#' `fxn_navsetCardTableCaption.R` - Build caption for bar chart based on user input
+#' `fxn_navsetCardTableCaption.R` - Build caption for table summary based on user input
 #' 
 #' @param etEquation - ET equation selection by user
-#' @return `navsetCardTableCaption` Caption for bar chart based on selected station
+#' @return `navsetCardTableCaption` Caption for table summary based on user input
 
 
 fxn_navsetCardTableCaption <- function(etEquation) {

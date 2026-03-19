@@ -1,11 +1,11 @@
-#' `fxn_navsetCardTimeSeriesCaption.R` - Build caption for bar chart based on user input
+#' `fxn_navsetCardTimeSeriesCaption.R` - Build caption for time series graph based on user input
 #' 
 #' @param azmetStation AZMet station selection by user
-#' @param inData - data table of seasonal total evapotranspiration by year
+#' @param inData - Data table [[1]] from `fxn_totalEvapotranspiration.R`
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
 #' @param etEquation - ET equation selection by user
-#' @return `navsetCardTimeSeriesCaption` Caption for bar chart based on selected station
+#' @return `navsetCardTimeSeriesCaption` Caption for time series graph based on user input
 
 
 fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, endDate, etEquation) {
@@ -14,7 +14,8 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
     dplyr::filter(
       azmetStationMetadata, 
       meta_station_name == azmetStation
-    )$start_date
+    ) %>% 
+    dplyr::pull(start_date)
   
   
   if (length(unique(inData$date_year_label)) == 1) {

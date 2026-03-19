@@ -1,8 +1,8 @@
-#' `fxn_navsetCardTabTitle.R` - Build title for navset card tab section
+#' `fxn_navsetCardTabTitle.R` - Build title for navset card tab section of page
 #' 
 #' @param azmetStation - AZMet station selection by user
 #' @param navsetCardTabTitleIcon - Title icon based on selected tab
-#' @return `navsetCardTabTitle` - Title for navset card tab section based on user input
+#' @return `navsetCardTabTitle` - Title for navset card tab section of page based on user input
 
 
 fxn_navsetCardTabTitle <- function(azmetStation, navsetCardTabTitleIcon) {

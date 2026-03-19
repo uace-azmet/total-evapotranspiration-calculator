@@ -3,6 +3,7 @@
 
 # UI --------------------
 
+
 ui <- htmltools::htmlTemplate(
   
   filename = "azmet-shiny-template.html",
@@ -30,15 +31,16 @@ ui <- htmltools::htmlTemplate(
 
 # Server --------------------
 
+
 server <- function(input, output, session) {
   shinyjs::useShinyjs(html = TRUE)
-  shinyjs::hideElement("downloadButtonsDiv")
+  shinyjs::hideElement(id = "downloadButtonsDiv")
   
   
   # Observables -----
   
   shiny::observeEvent(totalEvapotranspiration(), {
-    shinyjs::showElement("downloadButtonsDiv")
+    shinyjs::showElement(id = "downloadButtonsDiv")
     showNavsetCardTab(TRUE)
     showPageBottomText(TRUE)
   })
@@ -46,10 +48,8 @@ server <- function(input, output, session) {
   # To update available dates based on selected station
   shiny::observeEvent(input$azmetStation, {
     stationStartDate <-
-      dplyr::filter(
-        azmetStationMetadata,
-        meta_station_name == input$azmetStation
-      )$start_date
+      dplyr::filter(azmetStationMetadata, meta_station_name == input$azmetStation) %>% 
+      dplyr::pull(start_date)
     
     if (stationStartDate > Sys.Date() - lubridate::years(1)) {
       stationStartDateMinimum <- stationStartDate
@@ -98,13 +98,13 @@ server <- function(input, output, session) {
   shiny::observeEvent(input$navsetCardTab, {
     if (input$navsetCardTab == "barChart") {
       navsetCardTabTitleIcon("bar-chart-fill")
-      print("bar-chart-fill")
+      # print("bar-chart-fill")
     } else if (input$navsetCardTab == "table") {
       navsetCardTabTitleIcon("table")
-      print("table")
+      # print("table")
     } else if (input$navsetCardTab == "timeSeries") {
       navsetCardTabTitleIcon("graph-up")
-      print("graph-up")
+      # print("graph-up")
     }
   })
   
@@ -214,7 +214,7 @@ server <- function(input, output, session) {
       add = TRUE
     )
     
-    fxn_totalEvapotranspiration( # calls `fxn_azDaily.R`
+    fxn_totalEvapotranspiration( # calls `fxn_azDaily.R`, `fxn_etTotal.R`
       azmetStation = input$azmetStation,
       startDate = input$startDate,
       endDate = input$endDate,
@@ -230,14 +230,14 @@ server <- function(input, output, session) {
   })
   
   output$downloadCSV <- shiny::downloadHandler(
-    filename = function() {"AZMet-Total-Evaporation-Calculator.csv"},
+    filename = function() {"AZMet-total-evaporation-calculator.csv"},
     content = function(file) {
       vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = ",")
     }
   )
   
   output$downloadTSV <- shiny::downloadHandler(
-    filename = function() {"AZMet-Total-Evaporation-Calculator.tsv"},
+    filename = function() {"AZMet-total-evaporation-calculator.tsv"},
     content = function(file) {
       vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = "\t")
     }
@@ -290,6 +290,8 @@ server <- function(input, output, session) {
   })
 }
 
+
 # Run --------------------
+
 
 shiny::shinyApp(ui = ui, server = server)

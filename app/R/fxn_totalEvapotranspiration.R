@@ -1,20 +1,21 @@
-#' `fxn_totalEvapotranspiration` - calculates ET accumulation by day for period of interest and different years
+#' `fxn_totalEvapotranspiration` - Calculates ET accumulation by day and season for period of interest and individual years
 #' 
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
 #' @param etEquation - Evapotranspiration equation selection by user
-#' @return `totalEvapotranspiration` - Data table of daily values for individual years
+#' @return `totalEvapotranspiration` - List of daily [[1]] and seasonal [[2]] data tables of values for individual years
 
 
 fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEquation) {
   azmetStationStartDate <- 
-    dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation)$start_date
+    dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation) %>% 
+    dplyr::pull(start_date)
     
   azDaily <- 
     fxn_azDaily(
       azmetStation = azmetStation,
-      startDate = azmetStationStartDate, # To call API only once
+      startDate = azmetStationStartDate, # To call API only once, faster with daily data
       endDate = endDate
     )
   
@@ -27,18 +28,18 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
         datetime >= startDate & datetime <= endDate
       ) %>% 
       dplyr::mutate(
-        precip_total_mm_acc = round(cumsum(precip_total_mm), digits = 2),
-        precip_total_in_acc = round(cumsum(precip_total_in), digits = 2),
-        eto_azmet_acc = round(cumsum(eto_azmet), digits = 2),
-        eto_azmet_in_acc = round(cumsum(eto_azmet_in), digits = 2),
-        eto_pen_mon_acc = round(cumsum(eto_pen_mon), digits = 2),
-        eto_pen_mon_in_acc = round(cumsum(eto_pen_mon_in), digits = 2),
         date_year_label = dplyr::if_else(
           condition = lubridate::year(startDate) == lubridate::year(endDate),
           true = as.character(lubridate::year(startDate)),
           false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
         ),
-        day_of_period = dplyr::row_number()
+        day_of_period = dplyr::row_number(),
+        eto_azmet_acc = round(cumsum(eto_azmet), digits = 2),
+        eto_azmet_in_acc = round(cumsum(eto_azmet_in), digits = 2),
+        eto_pen_mon_acc = round(cumsum(eto_pen_mon), digits = 2),
+        eto_pen_mon_in_acc = round(cumsum(eto_pen_mon_in), digits = 2),
+        precip_total_mm_acc = round(cumsum(precip_total_mm), digits = 2),
+        precip_total_in_acc = round(cumsum(precip_total_in), digits = 2)
       )
     
     singleYearTotal <-
@@ -63,20 +64,20 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
       if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = userDateRange) == TRUE) {
         singleYearDaily <- singleYearDaily %>% 
           dplyr::mutate(
-            precip_total_mm_acc = NA_real_,
-            precip_total_in_acc = NA_real_,
             eto_azmet_acc = NA_real_,
             eto_azmet_in_acc = NA_real_,
             eto_pen_mon_acc = NA_real_,
-            eto_pen_mon_in_acc = NA_real_
+            eto_pen_mon_in_acc = NA_real_,
+            precip_total_mm_acc = NA_real_,
+            precip_total_in_acc = NA_real_
           )
         
-        # singleYearTotal$etTotal <- 0.00
         singleYearTotal$etTotal <- NA_real_
         singleYearTotal$etTotalLabel <- "NA"
       }
     }
 
+    # Build data tables for return
     if (exists("dailyTotals") == FALSE) {
       dailyTotals <- singleYearDaily
     } else {
@@ -89,15 +90,10 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
       seasonalTotals <- rbind(seasonalTotals, singleYearTotal)
     }
     
+    # Setup for analysis of data from previous year
     startDate <- min(seq(lubridate::date(startDate), length = 2, by = "-1 year"))
     endDate <- min(seq(lubridate::date(endDate), length = 2, by = "-1 year"))
   }
-  
-  # Account for multi-month absence of YUG data in 2021
-  # if (azmetStation == "Yuma N.Gila") {
-  #   totalEvapotranspiration <- totalEvapotranspiration %>% 
-  #     dplyr::filter(etTotalLabel != "NA")
-  # }
   
   return(list(dailyTotals, seasonalTotals))
 }

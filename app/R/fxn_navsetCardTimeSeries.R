@@ -5,7 +5,7 @@
 #' @param endDate - End date of period of interest
 #' @param etEquation - Evapotranspiration equation selection by user
 
-#' @return `navsetCardTimeSeries` - time series graph with daily data based on user input
+#' @return `navsetCardTimeSeries` - Time series graph with daily data based on user input
 
 # https://plotly-r.com/ 
 # https://plotly.com/r/reference/ 
@@ -16,7 +16,7 @@
 
 fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
   
-  # Inputs -----
+  # Inputs --
   
   if (etEquation == "Original AZMet") {
     inData <- inData %>% 
@@ -35,21 +35,21 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
   inData <- inData |>
     dplyr::mutate(datetime = lubridate::ymd(datetime))
   
-  dataOtherYears <- inData %>% 
+  dataPreviousYears <- inData %>% 
     dplyr::filter(datetime < startDate) %>% 
     dplyr::group_by(date_year_label)
   
-  dataSelectedYear <- inData %>% 
+  dataCurrentYear <- inData %>% 
     dplyr::filter(datetime >= startDate)
   
   layoutFontFamily <- "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
   
   
-  # Time series -----
+  # Time series --
   
   navsetCardTimeSeries <- 
-    plotly::plot_ly( # Lines and points for `dataOtherYears`
-      data = dataOtherYears,
+    plotly::plot_ly( # Lines and points for `dataPreviousYears`
+      data = dataPreviousYears,
       x = ~day_of_period,
       y = ~et_total_in_acc,
       type = "scatter",
@@ -63,7 +63,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
         color = "rgba(201, 201, 201, 1.0)", 
         width = 1
       ),
-      name = "other years",
+      name = "previous years",
       hoverinfo = "text",
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
@@ -71,13 +71,13 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
         "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
-      legendgroup = "dataOtherYears",
+      legendgroup = "dataPreviousYears",
       legendrank = 2
     ) %>% 
     
-    plotly::add_trace( # Lines and points for `dataSelectedYear`
+    plotly::add_trace( # Lines and points for `dataCurrentYear`
       inherit = FALSE,
-      data = dataSelectedYear,
+      data = dataCurrentYear,
       x = ~day_of_period,
       y = ~et_total_in_acc,
       type = "scatter",
@@ -99,7 +99,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
         "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
-      legendgroup = "dataSelectedYear",
+      legendgroup = "dataCurrentYear",
       legendrank = 1
     ) %>% 
     
@@ -129,7 +129,6 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
         family = layoutFontFamily,
         size = 13
       ),
-      # hoverdistance = 1,
       hoverlabel = list(
         font = list(
           family = layoutFontFamily,

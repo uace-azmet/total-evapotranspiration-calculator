@@ -1,6 +1,6 @@
-#' `fxn_downloadButtonsDiv.R` - Build HTML div for download .csv and .tsv buttons
+#' `fxn_downloadButtonsDiv.R` - Build HTML div with download .csv and .tsv buttons
 #' 
-#' @return `downloadButtonsDiv` - HTML div for download .csv and .tsv buttons
+#' @return `downloadButtonsDiv` - HTML div with download .csv and .tsv buttons
 
 
 fxn_downloadButtonsDiv <- function() {

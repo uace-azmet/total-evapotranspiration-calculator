@@ -60,7 +60,8 @@ initialStation <-
   dplyr::filter(
     activeStations,
     meta_station_name == azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
-  )$meta_station_name
+  ) %>% 
+  dplyr::pull(meta_station_name)
 
 navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
 
@@ -164,7 +165,9 @@ dailyVarsMeasured <-
 
 # Datepicker --
 
-initialStationStartDate <- dplyr::filter(activeStations, meta_station_name == initialStation)$start_date
+initialStationStartDate <- 
+  dplyr::filter(activeStations, meta_station_name == initialStation) %>% 
+  dplyr::pull(start_date)
 
 if (initialStationStartDate > Sys.Date() - lubridate::years(1)) {
   initialStartDateMinimum <- initialStationStartDate

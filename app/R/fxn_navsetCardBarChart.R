@@ -1,7 +1,7 @@
-#' `fxn_navsetCardBarChart` generates bar chart of total evapotranspiration of current and recent years
+#' `fxn_navsetCardBarChart` Generates bar chart of total evapotranspiration of current and recent years
 #' 
-#' @param inData - data table of seasonal total evapotranspiration values by year
-#' @param azmetStation - user-specified AZMet station
+#' @param inData - Data table [[2]] from `fxn_totalEvapotranspiration.R`
+#' @param azmetStation - User-specified AZMet station
 #' @return `navsetCardBarChart` - plotly bar chart
 
 # https://plotly-r.com/ 
@@ -13,7 +13,7 @@
 
 fxn_navsetCardBarChart <- function(inData, azmetStation) {
   
-  # Inputs -----
+  # Inputs --
   
   averageTotal <- mean(inData$etTotal, na.rm = TRUE)
   
@@ -31,10 +31,9 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
   tickvals <- inData$endDateYear
   
   
-  # Figure -----
+  # Figure --
   
-  # For stations with only one year of data
-  if (nrow(inData) == 1) {
+  if (nrow(inData) == 1) { # For stations with only one year of data
     navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
@@ -171,7 +170,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           zerolinecolor = "#c9c9c9"
         )
       )
-  } else {
+  } else { # For stations with more than one year of data
     navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
