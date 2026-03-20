@@ -35,12 +35,14 @@ ui <- htmltools::htmlTemplate(
 server <- function(input, output, session) {
   shinyjs::useShinyjs(html = TRUE)
   shinyjs::hideElement(id = "downloadButtonsDiv")
+  shinyjs::hideElement(id = "navsetCardTab")
   
   
   # Observables -----
   
   shiny::observeEvent(totalEvapotranspiration(), {
     shinyjs::showElement(id = "downloadButtonsDiv")
+    shinyjs::showElement(id = "navsetCardTab")
     showNavsetCardTab(TRUE)
     showPageBottomText(TRUE)
   })
