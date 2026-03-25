@@ -31,7 +31,7 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
   }
   
   variableKeyText <- 
-    "Variable key: <strong>ET<sub>cumulative</sub> (in)</strong> accumulation of daily total evapotranspiration in inches"
+    "Variable key: <strong>Day<sub>period</sub></strong> day number of the period of interest; <strong>ET<sub>cumulative</sub> (in)</strong> accumulation of daily total evapotranspiration in inches"
   
   # Account for multi-month absence of YUG data in 2021
   nonOperational <- 0
