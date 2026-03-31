@@ -237,7 +237,7 @@ server <- function(input, output, session) {
         add = TRUE
       )
       
-      fxn_totalEvapotranspiration( # calls `fxn_azDaily.R`, `fxn_etSeasonalTotal.R`
+      fxn_totalEvapotranspiration( # calls `fxn_azDaily.R`, `fxn_totalEvapotranspirationSeasonal.R`
         azmetStation = input$azmetStation,
         startDate = input$startDate,
         endDate = input$endDate,

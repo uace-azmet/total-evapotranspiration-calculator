@@ -10,8 +10,8 @@
 fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
   currentYear <- lubridate::year(endDate)
   currentYearTotal <- 
-    dplyr::filter(inData, endDateYear == currentYear) %>% 
-    dplyr::pull(etSeasonalTotal)
+    dplyr::filter(inData, end_date_year == currentYear) %>% 
+    dplyr::pull(total_evapotranspiration_seasonal)
   
   if (azmetStation == "Yuma N.Gila") {
     yugNodataOverlapPreviousYear <- 
@@ -39,7 +39,7 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
         class = "navset-card-tab-summary"
       )
   } else if (yugNodataOverlapPreviousYear == TRUE) {
-    averageTotal <- mean(inData$etSeasonalTotal, na.rm = TRUE)
+    averageTotal <- mean(inData$total_evapotranspiration_seasonal, na.rm = TRUE)
     
     differenceAverage <- currentYearTotal - averageTotal
     
@@ -69,14 +69,14 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
       )
   }
     else {
-    averageTotal <- mean(inData$etSeasonalTotal, na.rm = TRUE)
+    averageTotal <- mean(inData$total_evapotranspiration_seasonal, na.rm = TRUE)
     previousYear <- currentYear - 1
     previousYearText <- 
-      dplyr::filter(inData, endDateYear == previousYear) %>% 
-      dplyr::pull(dateYearLabel)
+      dplyr::filter(inData, end_date_year == previousYear) %>% 
+      dplyr::pull(date_year_label)
     previousYearTotal <- 
-      dplyr::filter(inData, endDateYear == previousYear) %>% 
-      dplyr::pull(etSeasonalTotal)
+      dplyr::filter(inData, end_date_year == previousYear) %>% 
+      dplyr::pull(total_evapotranspiration_seasonal)
     
     differenceAverage <- currentYearTotal - averageTotal
     differencePreviousYear <- currentYearTotal - previousYearTotal
