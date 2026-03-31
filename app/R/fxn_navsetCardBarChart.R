@@ -13,40 +13,41 @@
 
 fxn_navsetCardBarChart <- function(inData, azmetStation) {
   
-  # Inputs --
   
-  averageTotal <- mean(inData$etTotal, na.rm = TRUE)
+  # Inputs -----
+  
+  averageTotal <- mean(inData$total_evapotranspiration_seasonal, na.rm = TRUE)
   
   dataCurrentYear <- inData %>% 
-    dplyr::filter(endDateYear == max(endDateYear)) %>%
-    dplyr::mutate(endDateYear = as.factor(endDateYear))
+    dplyr::filter(end_date_year == max(end_date_year)) %>%
+    dplyr::mutate(end_date_year = as.factor(end_date_year))
   
   dataOtherYears <- inData %>% 
-    dplyr::filter(endDateYear != max(endDateYear)) %>% 
-    dplyr::mutate(endDateYear = as.factor(endDateYear))
+    dplyr::filter(end_date_year != max(end_date_year)) %>% 
+    dplyr::mutate(end_date_year = as.factor(end_date_year))
   
   layoutFontFamily <- "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
   
-  ticktext <- inData$dateYearLabel
-  tickvals <- inData$endDateYear
+  ticktext <- inData$date_year_label
+  tickvals <- inData$end_date_year
   
   
-  # Figure --
+  # Bar Chart -----
   
   if (nrow(inData) == 1) { # For stations with only one year of data
     navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
-        x = ~endDateYear,
-        y = ~etTotal,
+        x = ~end_date_year,
+        y = ~total_evapotranspiration_seasonal,
         marker = list(color = "#bfbfbf"),
         name = "other years",
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>Year:</b> ", date_year_label,
+          "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -54,16 +55,16 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
       plotly::add_trace( # Bar for `dataCurrentYear`
         inherit = FALSE,
         data = dataCurrentYear,
-        x = ~endDateYear,
-        y = ~etTotal,
+        x = ~end_date_year,
+        y = ~total_evapotranspiration_seasonal,
         marker = list(color = "#191919"),
         name = "current year",
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>Year:</b> ", date_year_label,
+          "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
         ),
         type = "bar"
       ) %>%
@@ -174,16 +175,16 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
     navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
-        x = ~endDateYear,
-        y = ~etTotal,
+        x = ~end_date_year,
+        y = ~total_evapotranspiration_seasonal,
         marker = list(color = "#bfbfbf"),
         name = "other years",
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>Year:</b> ", date_year_label,
+          "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -191,16 +192,16 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
       plotly::add_trace( # Bar for `dataCurrentYear`
         inherit = FALSE,
         data = dataCurrentYear,
-        x = ~endDateYear,
-        y = ~etTotal,
+        x = ~end_date_year,
+        y = ~total_evapotranspiration_seasonal,
         marker = list(color = "#191919"),
         name = "current year",
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>Year:</b> ", date_year_label,
+          "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
         ),
         type = "bar"
       ) %>%

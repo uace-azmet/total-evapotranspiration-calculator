@@ -16,7 +16,8 @@
 
 fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
   
-  # Inputs --
+  
+  # Inputs -----
   
   if (etEquation == "Original AZMet") {
     inData <- inData %>% 
@@ -45,7 +46,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
   layoutFontFamily <- "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
   
   
-  # Time series --
+  # Time Series -----
   
   navsetCardTimeSeries <- 
     plotly::plot_ly( # Lines and points for `dataPreviousYears`
@@ -55,21 +56,16 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
       type = "scatter",
       mode = "lines+markers",
       #color = "rgba(201, 201, 201, 1.0)",
-      marker = list(
-        color = "rgba(201, 201, 201, 1.0)",
-        size = 3
-      ),
-      line = list(
-        color = "rgba(201, 201, 201, 1.0)", 
-        width = 1
-      ),
+      marker = list(color = "rgba(201, 201, 201, 1.0)", size = 3),
+      line = list(color = "rgba(201, 201, 201, 1.0)", width = 1),
       name = "previous years",
       hoverinfo = "text",
-      text = ~paste0(
-        "<br><b>AZMet Station:</b> ", meta_station_name,
-        "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
-      ),
+      text = 
+        ~paste0(
+          "<br><b>AZMet Station:</b> ", meta_station_name,
+          "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
+          "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
+        ),
       showlegend = TRUE,
       legendgroup = "dataPreviousYears",
       legendrank = 2
@@ -83,21 +79,16 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
       type = "scatter",
       mode = "lines+markers",
       #color = "#191919",
-      marker = list(
-        color = "#191919",
-        size = 3
-      ),
-      line = list(
-        color = "#191919", 
-        width = 1.5
-      ),
+      marker = list(color = "#191919", size = 3),
+      line = list(color = "#191919", width = 1.5),
       name = ~date_year_label,
       hoverinfo = "text",
-      text = ~paste0(
-        "<br><b>AZMet Station:</b> ", meta_station_name,
-        "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
-      ),
+      text = 
+          ~paste0(
+          "<br><b>AZMet Station:</b> ", meta_station_name,
+          "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
+          "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
+        ),
       showlegend = TRUE,
       legendgroup = "dataCurrentYear",
       legendrank = 1
@@ -106,74 +97,70 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
     plotly::config(
       displaylogo = FALSE,
       displayModeBar = TRUE,
-      modeBarButtonsToRemove = c(
-        "autoScale2d",
-        "hoverClosestCartesian", 
-        "hoverCompareCartesian", 
-        "lasso2d",
-        "select"
-      ),
+      modeBarButtonsToRemove = 
+        c(
+          "autoScale2d",
+          "hoverClosestCartesian", 
+          "hoverCompareCartesian", 
+          "lasso2d",
+          "select"
+        ),
       scrollZoom = FALSE,
-      toImageButtonOptions = list(
-        format = "png", # Either png, svg, jpeg, or webp
-        filename = "AZMet-Total-Evapotranspiration-Calculator",
-        height = 400,
-        width = 700,
-        scale = 5
-      )
+      toImageButtonOptions = 
+        list(
+          format = "png", # Either png, svg, jpeg, or webp
+          filename = "AZMet-total-evapotranspiration-calculator",
+          height = 400,
+          width = 700,
+          scale = 5
+        )
     ) %>%
     
     plotly::layout(
-      font = list(
-        color = "#191919",
-        family = layoutFontFamily,
-        size = 13
-      ),
-      hoverlabel = list(
-        font = list(
-          family = layoutFontFamily,
-          size = 14
+      font = 
+        list(color = "#191919", family = layoutFontFamily, size = 13),
+      hoverlabel = 
+        list(font = list(family = layoutFontFamily, size = 14)),
+      legend = 
+        list(
+          groupclick = "toggleitem",
+          orientation = "h",
+          traceorder = "normal",
+          x = 0.00,
+          xanchor = "left",
+          xref = "container",
+          y = 1.05,
+          yanchor = "bottom",
+          yref = "container"
+        ),
+      margin = 
+        list(
+          l = 0,
+          r = 50, # For space between plot and modebar
+          b = 80, # For space between x-axis title and caption or figure help text
+          t = 0,
+          pad = 0
+        ),
+      modebar = list(bgcolor = "#FFFFFF", orientation = "v"),
+      xaxis = 
+        list(
+          range = list(~(min(day_of_period) - 0.5), ~(max(day_of_period) + 1.5)),
+          title = list(
+            font = list(size = 14),
+            standoff = 25,
+            text = "<b>Day<sub>period</sub></b>"
+          ),
+          zeroline = FALSE
+        ),
+      yaxis = 
+        list(
+          title = list(
+            font = list(size = 14),
+            standoff = 25,
+            text = "<b>ET<sub>cumulative</sub> (in)</b>"
+          ),
+          zeroline = FALSE
         )
-      ),
-      legend = list(
-        groupclick = "toggleitem",
-        orientation = "h",
-        traceorder = "normal",
-        x = 0.00,
-        xanchor = "left",
-        xref = "container",
-        y = 1.05,
-        yanchor = "bottom",
-        yref = "container"
-      ),
-      margin = list(
-        l = 0,
-        r = 50, # For space between plot and modebar
-        b = 80, # For space between x-axis title and caption or figure help text
-        t = 0,
-        pad = 0
-      ),
-      modebar = list(
-        bgcolor = "#FFFFFF",
-        orientation = "v"
-      ),
-      xaxis = list(
-        range = list(~(min(day_of_period) - 0.5), ~(max(day_of_period) + 1.5)),
-        title = list(
-          font = list(size = 14),
-          standoff = 25,
-          text = "<b>Day<sub>period</sub></b>"
-        ),
-        zeroline = FALSE
-      ),
-      yaxis = list(
-        title = list(
-          font = list(size = 14),
-          standoff = 25,
-          text = "<b>ET<sub>cumulative</sub> (in)</b>"
-        ),
-        zeroline = FALSE
-      )
     )
   
   return(navsetCardTimeSeries)
