@@ -22,7 +22,7 @@ fxn_navsetCardBarChartCaption <- function(azmetStation, inData, startDate, endDa
   } else {
     standardText <- 
       paste0(
-        "Total evapotranspiration for the current year (black bar in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Totals for past years (gray bars in graph) are based on the same start and end month and day, but during those respective years. Average total evapotranspiration is calculated from values of all individual years shown above. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+        "Total evapotranspiration for the current year (black bar in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Totals for past years (gray bars in graph) are based on the same start and end month and day, but during those respective years. Average total evapotranspiration is calculated from values of all individual years shown above. Data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   }
   
