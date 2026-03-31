@@ -11,22 +11,19 @@
 fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, endDate, etEquation) {
   
   azmetStationStartDate <- 
-    dplyr::filter(
-      azmetStationMetadata, 
-      meta_station_name == azmetStation
-    ) %>% 
+    dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation) %>% 
     dplyr::pull(start_date)
   
   
   if (length(unique(inData$date_year_label)) == 1) {
     standardText <- 
       paste0(
-        "Cumulative evapotranspiration (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+        "Cumulative evapotranspiration (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Line breaks denote no data for that day. Data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   } else {
     standardText <- 
       paste0(
-        "Cumulative evapotranspiration for the current year (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Totals for past years (gray lines in graph) are based on the same start and end month and day, but during those respective years. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+        "Cumulative evapotranspiration for the current year (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Totals for past years (gray lines in graph) are based on the same start and end month and day, but during those respective years. Line breaks denote no data for that day. Data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   }
   
@@ -37,16 +34,10 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
   nonOperational <- 0
   
   if (azmetStation == "Yuma N.Gila") {
-    nodataDateRange <-
-      lubridate::interval(
-        start = lubridate::date("2021-06-16"),
-        end = lubridate::date("2021-10-21")
-      )
-    
     while (startDate >= azmetStationStartDate) {
       userDateRange <- lubridate::interval(start = startDate, end = endDate)
       
-      if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = userDateRange) == TRUE) {
+      if (lubridate::int_overlaps(int1 = yugNodataInterval, int2 = userDateRange) == TRUE) {
         nonOperational <- 1
       }
       
@@ -62,7 +53,7 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
         htmltools::HTML(
           paste(
             standardText,
-            "However, we do not show cumulative evapotranspiration for the year with a month-day period that overlaps the period from June 16, 2021 through October 10, 2021, when the ", azmetStation, " station was not in operation.",
+            "However, we do not show cumulative evapotranspiration for dates during the period from June 16, 2021 through October 21, 2021, when the ", azmetStation, " station was not in operation.",
             variableKeyText,
             sep = " "
           )

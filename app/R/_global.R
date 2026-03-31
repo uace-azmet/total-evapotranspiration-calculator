@@ -12,6 +12,7 @@ library(plotly)
 library(reactable)
 library(shiny)
 library(shinyjs)
+library(tidyr)
 library(vroom)
 
 
@@ -29,6 +30,8 @@ shiny::addResourcePath("shinyjs", system.file("srcjs", package = "shinyjs"))
 
 # Variables --------------------
 
+
+# AZMet Stations -----
 
 azmetStationMetadata <- azmetr::station_info |>
   dplyr::mutate(end_date = NA) |> # Placeholder until inactive stations are in API and `azmetr`
@@ -49,12 +52,7 @@ azmetStationMetadata <- azmetr::station_info |>
   dplyr::filter(!meta_station_name %in% c("Test"))
 
 activeStations <-
-  dplyr::filter(
-    azmetStationMetadata,
-    status == "active"
-  )
-
-etEquations <- c("Original AZMet", "Penman-Monteith")
+  dplyr::filter(azmetStationMetadata, status == "active")
 
 initialStation <-
   dplyr::filter(
@@ -63,13 +61,12 @@ initialStation <-
   ) %>% 
   dplyr::pull(meta_station_name)
 
-navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
+yugNodataStartDate <- lubridate::date("2021-06-16")
+yugNodataEndDate <- lubridate::date("2021-10-21")
+yugNodataInterval <- lubridate::interval(yugNodataStartDate, yugNodataEndDate)
 
-showNavsetCardTab <- reactiveVal(FALSE)
-showPageBottomText <- reactiveVal(FALSE)
 
-
-# Daily Data --
+# Daily Data -----
 
 # Derived (after data retrieved from station) variables
 dailyVarsDerived <- 
@@ -82,9 +79,9 @@ dailyVarsDerived <-
     # "chill_hours_7C", 
     # "dwpt_mean", 
     # "dwpt_meanF", 
-    "eto_azmet",
+    # "eto_azmet",
     "eto_azmet_in", 
-    "eto_pen_mon", 
+    # "eto_pen_mon", 
     "eto_pen_mon_in", 
     # "heat_units_10C", 
     # "heat_units_13C", 
@@ -118,8 +115,8 @@ dailyVarsDerived <-
 # Identification and date variables
 dailyVarsID <- 
   c(
-    "date_doy", 
-    "date_year", 
+    # "date_doy", 
+    # "date_year", 
     "datetime", 
     # "meta_needs_review", 
     # "meta_station_id", 
@@ -133,7 +130,7 @@ dailyVarsMeasured <-
     # "meta_bat_volt_max", 
     # "meta_bat_volt_mean", 
     # "meta_bat_volt_min", 
-    "precip_total_mm"#, 
+    # "precip_total_mm"#, 
     # "relative_humidity_max", 
     # "relative_humidity_mean", 
     # "relative_humidity_min", 
@@ -163,14 +160,24 @@ dailyVarsMeasured <-
   )
 
 
-# Datepicker --
+# Datepicker -----
 
-initialStationStartDate <- 
+initialStartDateMinimum <- 
   dplyr::filter(activeStations, meta_station_name == initialStation) %>% 
   dplyr::pull(start_date)
 
-if (initialStationStartDate > Sys.Date() - lubridate::years(1)) {
-  initialStartDateMinimum <- initialStationStartDate
-} else {
-  initialStartDateMinimum <- Sys.Date() - lubridate::years(1)
-}
+# if (initialStationStartDate > Sys.Date() - lubridate::years(1)) {
+#   initialStartDateMinimum <- initialStationStartDate
+# } else {
+#   initialStartDateMinimum <- Sys.Date() - lubridate::years(1)
+# }
+
+
+# Other -----
+
+etEquations <- c("Original AZMet", "Penman-Monteith")
+
+navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
+
+showNavsetCardTab <- reactiveVal(FALSE)
+showPageBottomText <- reactiveVal(FALSE)

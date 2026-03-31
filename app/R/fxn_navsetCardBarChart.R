@@ -13,9 +13,10 @@
 
 fxn_navsetCardBarChart <- function(inData, azmetStation) {
   
-  # Inputs --
   
-  averageTotal <- mean(inData$etTotal, na.rm = TRUE)
+  # Inputs -----
+  
+  averageTotal <- mean(inData$etSeasonalTotal, na.rm = TRUE)
   
   dataCurrentYear <- inData %>% 
     dplyr::filter(endDateYear == max(endDateYear)) %>%
@@ -31,14 +32,14 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
   tickvals <- inData$endDateYear
   
   
-  # Figure --
+  # Bar Chart -----
   
   if (nrow(inData) == 1) { # For stations with only one year of data
     navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
         x = ~endDateYear,
-        y = ~etTotal,
+        y = ~etSeasonalTotal,
         marker = list(color = "#bfbfbf"),
         name = "other years",
         showlegend = FALSE,
@@ -46,7 +47,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
           "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>ET<sub>cumulative</sub>:</b> ", etSeasonalTotalLabel, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -55,7 +56,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         inherit = FALSE,
         data = dataCurrentYear,
         x = ~endDateYear,
-        y = ~etTotal,
+        y = ~etSeasonalTotal,
         marker = list(color = "#191919"),
         name = "current year",
         showlegend = FALSE,
@@ -63,7 +64,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
           "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>ET<sub>cumulative</sub>:</b> ", etSeasonalTotalLabel, " inches"
         ),
         type = "bar"
       ) %>%
@@ -175,7 +176,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
         x = ~endDateYear,
-        y = ~etTotal,
+        y = ~etSeasonalTotal,
         marker = list(color = "#bfbfbf"),
         name = "other years",
         showlegend = FALSE,
@@ -183,7 +184,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
           "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>ET<sub>cumulative</sub>:</b> ", etSeasonalTotalLabel, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -192,7 +193,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         inherit = FALSE,
         data = dataCurrentYear,
         x = ~endDateYear,
-        y = ~etTotal,
+        y = ~etSeasonalTotal,
         marker = list(color = "#191919"),
         name = "current year",
         showlegend = FALSE,
@@ -200,7 +201,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
           "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>ET<sub>cumulative</sub>:</b> ", etSeasonalTotalLabel, " inches"
         ),
         type = "bar"
       ) %>%
