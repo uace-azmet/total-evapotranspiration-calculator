@@ -44,11 +44,12 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         name = "other years",
         showlegend = FALSE,
         hoverinfo = "text",
-        hovertext = ~paste0(
-          "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", date_year_label,
-          "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
-        ),
+        hovertext = 
+          ~paste0(
+            "<br><b>AZMet Station:</b> ", azmetStation,
+            "<br><b>Year:</b> ", date_year_label,
+            "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
+          ),
         type = "bar"
       ) %>% 
       
@@ -61,32 +62,35 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         name = "current year",
         showlegend = FALSE,
         hoverinfo = "text",
-        hovertext = ~paste0(
-          "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", date_year_label,
-          "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
-        ),
+        hovertext = 
+          ~paste0(
+            "<br><b>AZMet Station:</b> ", azmetStation,
+            "<br><b>Year:</b> ", date_year_label,
+            "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
+          ),
         type = "bar"
       ) %>%
       
       plotly::config(
         displaylogo = FALSE,
         displayModeBar = FALSE,
-        modeBarButtonsToRemove = c(
-          "autoScale2d",
-          "hoverClosestCartesian", 
-          "hoverCompareCartesian", 
-          "lasso2d",
-          "select"
-        ),
+        modeBarButtonsToRemove = 
+          c(
+            "autoScale2d",
+            "hoverClosestCartesian", 
+            "hoverCompareCartesian", 
+            "lasso2d",
+            "select"
+          ),
         scrollZoom = FALSE,
-        toImageButtonOptions = list(
-          format = "png", # Either png, svg, jpeg, or webp
-          filename = "AZMet-total-evapotranspiration-calculator",
-          height = 400,
-          width = 700,
-          scale = 5
-        )
+        toImageButtonOptions = 
+          list(
+            format = "png", # Either png, svg, jpeg, or webp
+            filename = "AZMet-total-evapotranspiration-calculator",
+            height = 400,
+            width = 700,
+            scale = 5
+          )
       ) %>%
       
       plotly::layout(
@@ -109,28 +113,17 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         #   yref = "y",
         #   yshift = 0
         # ),
-        font = list(
-          color = "#191919",
-          family = layoutFontFamily,
-          size = 13
-        ),
-        hoverlabel = list(
-          font = list(
-            family = layoutFontFamily,
-            size = 14
-          )
-        ),
-        margin = list(
-          l = 0,
-          r = 0, # For space between plot and modebar
-          b = 0,
-          t = 0,
-          pad = 3 # For space between gridlines and yaxis labels
-        ),
-        modebar = list(
-          bgcolor = "#FFFFFF",
-          orientation = "v"
-        ),
+        font = list(color = "#191919", family = layoutFontFamily, size = 13),
+        hoverlabel = list(font = list(family = layoutFontFamily, size = 14)),
+        margin = 
+          list(
+            l = 0,
+            r = 0, # For space between plot and modebar
+            b = 0,
+            t = 0,
+            pad = 3 # For space between gridlines and yaxis labels
+          ),
+        modebar = list(bgcolor = "#FFFFFF", orientation = "v"),
         # shapes =
         #   list(
         #     type = "line",
@@ -147,29 +140,32 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         #     y1 = averageTotal,
         #     yref = "y"
         #   ),
-        xaxis = list(
-          fixedrange = TRUE,
-          linewidth = 0,
-          ticktext = ticktext,
-          tickvals = tickvals,
-          title = list(
-            font = list(size = 14),
-            standoff = 25,
-            text = "<b>Year</b>"
+        xaxis = 
+          list(
+            fixedrange = TRUE,
+            linewidth = 0,
+            ticktext = ticktext,
+            tickvals = tickvals,
+            title = 
+              list(
+                font = list(size = 14),
+                standoff = 25,
+                text = "<b>Year</b>"
+              ),
+            zeroline = FALSE
           ),
-          zeroline = FALSE
-        ),
-        yaxis = list(
-          fixedrange = TRUE,
-          gridcolor = "#c9c9c9",
-          title = list(
-            font = list(size = 14),
-            standoff = 25,
-            text = "<b>ET<sub>cumulative</sub> (in)</b>"
-          ),
-          zeroline = TRUE,
-          zerolinecolor = "#c9c9c9"
-        )
+        yaxis = 
+          list(
+            fixedrange = TRUE,
+            gridcolor = "#c9c9c9",
+            title = list(
+              font = list(size = 14),
+              standoff = 25,
+              text = "<b>ET<sub>cumulative</sub> (in)</b>"
+            ),
+            zeroline = TRUE,
+            zerolinecolor = "#c9c9c9"
+          )
       )
   } else { # For stations with more than one year of data
     navsetCardBarChart <- 
@@ -181,11 +177,12 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         name = "other years",
         showlegend = FALSE,
         hoverinfo = "text",
-        hovertext = ~paste0(
-          "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", date_year_label,
-          "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
-        ),
+        hovertext = 
+          ~paste0(
+            "<br><b>AZMet Station:</b> ", azmetStation,
+            "<br><b>Year:</b> ", date_year_label,
+            "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
+          ),
         type = "bar"
       ) %>% 
       
@@ -198,11 +195,12 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         name = "current year",
         showlegend = FALSE,
         hoverinfo = "text",
-        hovertext = ~paste0(
-          "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", date_year_label,
-          "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
-        ),
+        hovertext = 
+          ~paste0(
+            "<br><b>AZMet Station:</b> ", azmetStation,
+            "<br><b>Year:</b> ", date_year_label,
+            "<br><b>ET<sub>cumulative</sub>:</b> ", total_evapotranspiration_seasonal_label, " inches"
+          ),
         type = "bar"
       ) %>%
       
@@ -217,13 +215,14 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           "select"
         ),
         scrollZoom = FALSE,
-        toImageButtonOptions = list(
-          format = "png", # Either png, svg, jpeg, or webp
-          filename = "AZMet-total-evapotranspiration-calculator",
-          height = 400,
-          width = 700,
-          scale = 5
-        )
+        toImageButtonOptions = 
+          list(
+            format = "png", # Either png, svg, jpeg, or webp
+            filename = "AZMet-total-evapotranspiration-calculator",
+            height = 400,
+            width = 700,
+            scale = 5
+          )
       ) %>%
       
       plotly::layout(
@@ -236,7 +235,10 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
               size = 14
             ),
           showarrow = FALSE,
-          text = paste("<b>Average: ", format(abs(round(averageTotal, digits = 2)), nsmall = 2), " inches</b>"),
+          text = 
+            paste(
+              "<b>Average: ", format(abs(round(averageTotal, digits = 2)), nsmall = 2), " inches</b>"
+            ),
           x = 0,
           xanchor = "left",
           xref = "paper",
@@ -246,37 +248,22 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           yref = "y",
           yshift = 0
         ),
-        font = list(
-          color = "#191919",
-          family = layoutFontFamily,
-          size = 13
-        ),
-        hoverlabel = list(
-          font = list(
-            family = layoutFontFamily,
-            size = 14
-          )
-        ),
-        margin = list(
-          l = 0,
-          r = 0, # For space between plot and modebar
-          b = 0,
-          t = 0,
-          pad = 3 # For space between gridlines and yaxis labels
-        ),
-        modebar = list(
-          bgcolor = "#FFFFFF",
-          orientation = "v"
-        ),
+        font = list(color = "#191919", family = layoutFontFamily, size = 13),
+        hoverlabel = list(font = list(family = layoutFontFamily, size = 14)),
+        margin = 
+          list(
+            l = 0,
+            r = 0, # For space between plot and modebar
+            b = 0,
+            t = 0,
+            pad = 3 # For space between gridlines and yaxis labels
+          ),
+        modebar = list(bgcolor = "#FFFFFF", orientation = "v"),
         shapes =
           list(
             type = "line",
             layer = "above",
-            line = list(
-              color = "#808080", 
-              dash = "solid",
-              width = 1
-            ),
+            line = list(color = "#808080", dash = "solid", width = 1),
             x0 = 0,
             x1 = 1,
             xref = "paper",
@@ -284,29 +271,33 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
             y1 = averageTotal,
             yref = "y"
           ),
-        xaxis = list(
-          fixedrange = TRUE,
-          linewidth = 0,
-          ticktext = ticktext,
-          tickvals = tickvals,
-          title = list(
-            font = list(size = 14),
-            standoff = 25,
-            text = "<b>Year</b>"
+        xaxis = 
+          list(
+            fixedrange = TRUE,
+            linewidth = 0,
+            ticktext = ticktext,
+            tickvals = tickvals,
+            title = 
+              list(
+                font = list(size = 14),
+                standoff = 25,
+                text = "<b>Year</b>"
+              ),
+            zeroline = FALSE
           ),
-          zeroline = FALSE
-        ),
-        yaxis = list(
-          fixedrange = TRUE,
-          gridcolor = "#c9c9c9",
-          title = list(
-            font = list(size = 14),
-            standoff = 25,
-            text = "<b>ET<sub>cumulative</sub> (in)</b>"
-          ),
-          zeroline = TRUE,
-          zerolinecolor = "#c9c9c9"
-        )
+        yaxis = 
+          list(
+            fixedrange = TRUE,
+            gridcolor = "#c9c9c9",
+            title = 
+              list(
+                font = list(size = 14),
+                standoff = 25,
+                text = "<b>ET<sub>cumulative</sub> (in)</b>"
+              ),
+            zeroline = TRUE,
+            zerolinecolor = "#c9c9c9"
+          )
       )
   }
   

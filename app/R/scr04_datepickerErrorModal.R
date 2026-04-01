@@ -7,9 +7,10 @@ datepickerErrorModal <-
     fade = FALSE,
     footer = shiny::modalButton("CLOSE"),
     size = "s",
-    title = htmltools::p(
-      id = "datepickerModal",
-      bsicons::bs_icon("sliders", class = "bolder-icon"), 
-      htmltools::HTML("&nbsp;<b>DATA OPTIONS</b>")
-    )
+    title = 
+      htmltools::p(
+        id = "datepickerModal",
+        bsicons::bs_icon("sliders", class = "bolder-icon"), 
+        htmltools::HTML("&nbsp;<b>DATA OPTIONS</b>")
+      )
   )

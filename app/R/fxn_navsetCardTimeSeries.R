@@ -117,10 +117,8 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
     ) %>%
     
     plotly::layout(
-      font = 
-        list(color = "#191919", family = layoutFontFamily, size = 13),
-      hoverlabel = 
-        list(font = list(family = layoutFontFamily, size = 14)),
+      font = list(color = "#191919", family = layoutFontFamily, size = 13),
+      hoverlabel = list(font = list(family = layoutFontFamily, size = 14)),
       legend = 
         list(
           groupclick = "toggleitem",

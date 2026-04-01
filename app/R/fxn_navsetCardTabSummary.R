@@ -8,6 +8,7 @@
 
 
 fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
+  
   currentYear <- lubridate::year(endDate)
   currentYearTotal <- 
     dplyr::filter(inData, end_date_year == currentYear) %>% 
@@ -67,8 +68,7 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
         
         class = "navset-card-tab-summary"
       )
-  }
-    else {
+  } else {
     averageTotal <- mean(inData$total_evapotranspiration_seasonal, na.rm = TRUE)
     previousYear <- currentYear - 1
     previousYearText <- 

@@ -8,6 +8,7 @@
 
 
 fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEquation) {
+  
   azmetStationStartDate <- 
     dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation) %>% 
     dplyr::pull(start_date)
@@ -63,7 +64,14 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
             true = NA_real_,
             false = 
               round((cumsum(tidyr::replace_na(precip_total_in, 0))), digits = 2)
-          )
+          ),
+        date_year_label = 
+          dplyr::if_else(
+            condition = lubridate::year(startDate) == lubridate::year(endDate),
+            true = as.character(lubridate::year(startDate)),
+            false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
+          ),
+        day_of_period = dplyr::row_number()
       )
     
     if (azmetStation == "Yuma N.Gila" & lubridate::int_overlaps(int1 = yugNodataInterval, int2 = userDateRange) == TRUE) {
@@ -91,16 +99,16 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
         )
     }
       
-    singleYearDaily <- singleYearDaily %>%
-      dplyr::mutate(
-        date_year_label = 
-          dplyr::if_else(
-            condition = lubridate::year(startDate) == lubridate::year(endDate),
-            true = as.character(lubridate::year(startDate)),
-            false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
-          ),
-        day_of_period = dplyr::row_number()
-      )
+    # singleYearDaily <- singleYearDaily %>%
+    #   dplyr::mutate(
+    #     date_year_label = 
+    #       dplyr::if_else(
+    #         condition = lubridate::year(startDate) == lubridate::year(endDate),
+    #         true = as.character(lubridate::year(startDate)),
+    #         false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
+    #       ),
+    #     day_of_period = dplyr::row_number()
+    #   )
       
     # With `singleYearDaily` transformed, calculate seasonal totals
     singleYearTotal <-

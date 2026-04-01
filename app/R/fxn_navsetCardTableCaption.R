@@ -5,6 +5,7 @@
 
 
 fxn_navsetCardTableCaption <- function(etEquation) {
+  
   navsetCardTableCaption <- 
     htmltools::p(
       htmltools::HTML(
