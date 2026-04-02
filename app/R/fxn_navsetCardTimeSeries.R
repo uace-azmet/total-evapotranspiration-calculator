@@ -127,8 +127,10 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
           x = 0.00,
           xanchor = "left",
           xref = "container",
-          y = 1.05,
-          yanchor = "bottom",
+          # y = 1.05,
+          # yanchor = "bottom",
+          y = 1.0,
+          yanchor = "top",
           yref = "container"
         ),
       margin = 
